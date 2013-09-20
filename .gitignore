@@ -1,0 +1,15 @@
+*.class
+
+# Package Files #
+*.war
+*.ear
+
+# Eclipse Project Files #
+.project
+.classpath
+.settings
+/bin
+
+
+# Local DB file #
+gamedata.db

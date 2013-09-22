@@ -11,7 +11,7 @@ rarities:
     # Blue - 0.88%
     # Unique - 0.069%
     ordinary: 0.0
-    uncommon: 0.02
+    uncommon: 0.012
     rare: 0.008
     legendary: 0.002
     unique: 0.0007

@@ -2,7 +2,7 @@ package org.landofordos.ordosloot;
 
 public enum Quality {
 
-	ordinary("Ordinary", "ffffff"), uncommon("Uncommon", "23aa00"), rare("Rare", "1ba9ab"), legendary("Legendary", "e4a40a"), unique(
+	ordinary("Ordinary", "ffffff"), uncommon("Uncommon", "23aa00"), rare("Rare", "00aaaa"), legendary("Legendary", "e4a40a"), unique(
 			"Unique", "af6025");
 
 	private String value;

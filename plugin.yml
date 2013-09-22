@@ -1,6 +1,6 @@
 name: OrdosLoot
 main: org.landofordos.ordosloot.OrdosLoot
-version: 0.1
+version: 0.6
 commands:
    ordosloot:
       description: OrdosLoot base command.

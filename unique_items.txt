@@ -1,0 +1,3 @@
+Eternal Flame,1,{Better to burn half as bright},WOOD_PICKAXE,{INFINITE_DURABILITY},{}
+Porphyria's Envy,1,{No fury like a woman slain},GOLD_SWORD,{},{DAMAGE_ALL=5&DAMAGE_UNDEAD=5&FIRE_ASPECT=2&KNOCKBACK=4&DURABILITY=1}
+Teshbian's Sceptre,1,{Wood of his wood&Now given to you.},FENCE,{},{DAMAGE_UNDEAD=7&DAMAGE_ARTHROPODS=7&KNOCKBACK=5&LOOT_BONUS_MOBS=3}

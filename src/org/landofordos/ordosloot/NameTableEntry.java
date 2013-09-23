@@ -10,7 +10,7 @@ public class NameTableEntry {
 	List<EnchantmentData> enchantments;
 	List<Material> validMats;
 	int weight;
-
+	
 	public NameTableEntry(String name, int weight, List<Material> validMats, List<EnchantmentData> enchs) {
 		this.name = name;
 		this.weight = weight;

@@ -1,27 +1,25 @@
 package org.landofordos.ordosloot;
 
+import org.bukkit.ChatColor;
+
 public enum Quality {
 
-	ordinary("Ordinary", "ffffff"), uncommon("Uncommon", "23aa00"), rare("Rare", "00aaaa"), legendary("Legendary", "e4a40a"), unique(
-			"Unique", "af6025");
+	ordinary("Ordinary", ChatColor.WHITE), uncommon("Uncommon", ChatColor.DARK_GREEN), rare("Rare", ChatColor.DARK_AQUA), legendary(
+			"Legendary", ChatColor.YELLOW), unique("Unique", ChatColor.GOLD);
 
 	private String value;
-	private String colorCode;
+	private ChatColor colorCode;
 
-	Quality(String value, String colorCode) {
+	Quality(String value, ChatColor colorCode) {
 		this.value = value;
-		if (colorCode.length() != 6) {
-			throw new IllegalArgumentException();
-		} else {
-			this.colorCode = colorCode;			
-		}
+		this.colorCode = colorCode;
 	}
 
 	public String getValue() {
 		return value;
 	}
-	
-	public String getColor() {
+
+	public ChatColor getColor() {
 		return colorCode;
 	}
 

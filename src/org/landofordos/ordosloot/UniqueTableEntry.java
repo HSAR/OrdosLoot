@@ -11,11 +11,13 @@ public class UniqueTableEntry {
 	private int weight;
 	private List<UniqueEffect> effects;
 	private List<EnchantmentData> enchantments;
+	private Material itemType;
 
 	public UniqueTableEntry(String name, int weight, List<String> desc, Material itemType, List<UniqueEffect> effects, List<EnchantmentData> enchs) {
 		this.name = name;
-		this.desc = desc;
 		this.weight = weight;
+		this.desc = desc;
+		this.itemType = itemType;
 		this.effects = effects;
 		this.enchantments = enchs;
 	}
@@ -23,13 +25,17 @@ public class UniqueTableEntry {
 	public String getName() {
 		return name;
 	}
+
+	public int getWeight() {
+		return weight;
+	}
 	
 	public List<String> getDesc() {
 		return desc;
 	}
-
-	public int getWeight() {
-		return weight;
+	
+	public Material getItemType() {
+		return itemType;
 	}
 
 	public List<UniqueEffect> getEffects() {

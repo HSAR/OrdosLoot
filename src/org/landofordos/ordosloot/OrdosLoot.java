@@ -112,6 +112,9 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 			// load available drop items from the file.
 			loadDropTable();
 			// load name tables from their files; extract them if they do not already exist.
+			// #TODO: Allow prefixes to add a description.
+			// #TODO: Crafting
+			// #TODO: Crafting ideas: use rotten meat for DAMAGE_UNDEAD. Use nether quartz because of difficulty of obtaining.
 			loadWeaponNameTables();
 			loadArmourNameTables();
 			// load unique-quality items from the file.
@@ -219,12 +222,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 				List<EnchantmentData> enchs = new ArrayList<EnchantmentData>();
 				for (String enchPair : enchPairs) {
 					String[] enchLine = enchPair.split("=");
-					Enchantment e = Enchantment.getByName(enchLine[0]);
-					if (e != null) {
-						enchs.add(new EnchantmentData(e, Integer.parseInt(enchLine[1])));
-					} else {
-						logger.log(Level.SEVERE, "Enchantment " + enchLine[0] + " could not be loaded from file.");
-					}
+					enchs.add(getEnchantment(enchLine[0], enchLine[1]));
 				}
 				wep_prefTable.addName(prefixData[0], Integer.parseInt(prefixData[1]), ites, enchs);
 			}
@@ -255,12 +253,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 				List<EnchantmentData> enchs = new ArrayList<EnchantmentData>();
 				for (String enchPair : enchPairs) {
 					String[] enchLine = enchPair.split("=");
-					Enchantment e = Enchantment.getByName(enchLine[0]);
-					if (e != null) {
-						enchs.add(new EnchantmentData(e, Integer.parseInt(enchLine[1])));
-					} else {
-						logger.log(Level.SEVERE, "Enchantment " + enchLine[0] + " could not be loaded from file.");
-					}
+					enchs.add(getEnchantment(enchLine[0], enchLine[1]));
 				}
 				wep_coreTable.addName(coreData[0], Integer.parseInt(coreData[1]), ites, enchs);
 			}
@@ -290,12 +283,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 				List<EnchantmentData> enchs = new ArrayList<EnchantmentData>();
 				for (String enchPair : enchPairs) {
 					String[] enchLine = enchPair.split("=");
-					Enchantment e = Enchantment.getByName(enchLine[0]);
-					if (e != null) {
-						enchs.add(new EnchantmentData(e, Integer.parseInt(enchLine[1])));
-					} else {
-						logger.log(Level.SEVERE, "Enchantment " + enchLine[0] + " could not be loaded from file.");
-					}
+					enchs.add(getEnchantment(enchLine[0], enchLine[1]));
 				}
 				wep_suffTable.addName(suffixData[0], Integer.parseInt(suffixData[1]), ites, enchs);
 			}
@@ -342,12 +330,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 				List<EnchantmentData> enchs = new ArrayList<EnchantmentData>();
 				for (String enchPair : enchPairs) {
 					String[] enchLine = enchPair.split("=");
-					Enchantment e = Enchantment.getByName(enchLine[0]);
-					if (e != null) {
-						enchs.add(new EnchantmentData(e, Integer.parseInt(enchLine[1])));
-					} else {
-						logger.log(Level.SEVERE, "Enchantment " + enchLine[0] + " could not be loaded from file.");
-					}
+					enchs.add(getEnchantment(enchLine[0], enchLine[1]));
 				}
 				arm_prefTable.addName(prefixData[0], Integer.parseInt(prefixData[1]), ites, enchs);
 			}
@@ -377,12 +360,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 				List<EnchantmentData> enchs = new ArrayList<EnchantmentData>();
 				for (String enchPair : enchPairs) {
 					String[] enchLine = enchPair.split("=");
-					Enchantment e = Enchantment.getByName(enchLine[0]);
-					if (e != null) {
-						enchs.add(new EnchantmentData(e, Integer.parseInt(enchLine[1])));
-					} else {
-						logger.log(Level.SEVERE, "Enchantment " + enchLine[0] + " could not be loaded from file.");
-					}
+					enchs.add(getEnchantment(enchLine[0], enchLine[1]));
 				}
 				arm_coreTable.addName(coreData[0], Integer.parseInt(coreData[1]), ites, enchs);
 			}
@@ -412,12 +390,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 				List<EnchantmentData> enchs = new ArrayList<EnchantmentData>();
 				for (String enchPair : enchPairs) {
 					String[] enchLine = enchPair.split("=");
-					Enchantment e = Enchantment.getByName(enchLine[0]);
-					if (e != null) {
-						enchs.add(new EnchantmentData(e, Integer.parseInt(enchLine[1])));
-					} else {
-						logger.log(Level.SEVERE, "Enchantment " + enchLine[0] + " could not be loaded from file.");
-					}
+					enchs.add(getEnchantment(enchLine[0], enchLine[1]));
 				}
 				arm_suffTable.addName(suffixData[0], Integer.parseInt(suffixData[1]), ites, enchs);
 			}
@@ -521,6 +494,10 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 	 */
 	public ItemStack getNewDroppedItem(Quality quality) {
 		if (quality != null) {
+			// unique items have a seperate generation
+			if (quality.equals(Quality.unique)) {
+				return createUniqueDrop(rng.nextDouble());
+			}
 			// decide the dropped item
 			DropTable validDropTable = dropTable.filterByQuality(quality);
 			DropTableEntry dte = validDropTable.getDropFromTable(rng.nextDouble());
@@ -551,7 +528,6 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 				default:
 					break;
 				}
-
 				switch (quality) {
 				case legendary:
 					pref = prefTable.getNameFromTable(rng.nextDouble());
@@ -560,8 +536,6 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 				case uncommon:
 					core = coreTable.getNameFromTable(rng.nextDouble());
 					break;
-				case unique:
-					item = createUniqueDrop(rng.nextDouble());
 				default:
 					break;
 				}
@@ -591,7 +565,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 					meta.addEnchant(ed.getEnchantment(), ed.getLevel(), false);
 				}
 				// set name
-				meta.setDisplayName(ChatColor.getByChar(quality.getColor()) + name);
+				meta.setDisplayName(quality.getColor() + name);
 				// apply metadata changes and return item
 				item.setItemMeta(meta);
 				return item;
@@ -602,13 +576,18 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 
 	private ItemStack createUniqueDrop(double val) {
 		// Draw and generate a new unique.
-		// #TODO: Write this
-		ItemStack item = new ItemStack(Material.STONE_SWORD);
+		UniqueTableEntry ute = uniqueTable.getUniqueFromTable(rng.nextDouble());
+		// get itemtype and retrieve metadata store
+		ItemStack item = new ItemStack(ute.getItemType());
 		ItemMeta meta = item.getItemMeta();
-		List<String> desc = new ArrayList<String>();
-		desc.add("Beyond the sharpened edge of the shield...");
-		meta.setLore(desc);
-		return null;
+		// set name, description and enchants
+		meta.setDisplayName(Quality.unique.getColor() + ute.getName());
+		meta.setLore(ute.getDesc());
+		for (EnchantmentData ench : ute.getEnchantments()) {
+			meta.addEnchant(ench.getEnchantment(), ench.getLevel(), true);
+		}
+		item.setItemMeta(meta);
+		return item;
 	}
 
 	/**
@@ -624,6 +603,23 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 		return uniqueTable.getUniqueByName(name);
 	}
 
+	private EnchantmentData getEnchantment(String ench, String level) {
+		Enchantment e = Enchantment.getByName(ench);
+		if (e != null) {
+			if (level.endsWith("*")) {
+				// if input ends with * generate a random level up to the input.
+				StringBuilder sb = new StringBuilder(level);
+				sb.setLength(sb.length() - 1);
+				return new EnchantmentData(e, Integer.parseInt(sb.toString()), false, true);
+			} else {
+				return new EnchantmentData(e, Integer.parseInt(level));
+			}
+		} else {
+			logger.log(Level.SEVERE, "Enchantment " + ench + " could not be loaded from file.");
+			return null;
+		}
+	}
+
 	@EventHandler(priority = EventPriority.NORMAL)
 	// EventPriority.NORMAL by default
 	public void onEntityDeath(final EntityDeathEvent event) {
@@ -633,7 +629,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 				return;
 			} else {
 				// #TODO: Implement player permission check before dropping loot.
-				Player player = monsterEnt.getKiller();
+				// Player player = monsterEnt.getKiller();
 				// We now know that a player (and not a mob spawner, or any other damage type) killed the mob.
 				// Randomly roll for item quality based on values loaded from file.
 				double dropVal = rng.nextDouble();
@@ -681,7 +677,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 		// add to fileContentList only if a string is not a comment // like this
 		List<String> fileContentList = new ArrayList<String>();
 		for (String s : fileContentArray) {
-			if (!s.startsWith("//")) {
+			if ((!s.startsWith("//")) && (!(s.trim().length() == 0))) {
 				fileContentList.add(s);
 			}
 		}

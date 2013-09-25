@@ -636,20 +636,19 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 				Quality droppedQual = qualityTable.checkQuality(dropVal);
 				if (droppedQual != null) {
 					if (verbose) {
-						logger.info(droppedQual + " drop (" + dropVal + ")");
+						logger.info(droppedQual + " dropped (" + dropVal + ")");
+					}
+					Location loc = monsterEnt.getLocation();
+					World world = loc.getWorld();
+					ItemStack item = getNewDroppedItem(droppedQual);
+					if (item != null) {
+						world.dropItemNaturally(loc, item);
 					}
 				} else {
 					if (verbose) {
 						logger.info("No item dropped.");
 					}
 				}
-				Location loc = monsterEnt.getLocation();
-				World world = loc.getWorld();
-				ItemStack item = getNewDroppedItem(droppedQual);
-				if (item != null) {
-					world.dropItemNaturally(loc, item);
-				}
-
 			}
 		}
 	}

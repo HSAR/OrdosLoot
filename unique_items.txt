@@ -1,5 +1,7 @@
 Eternal Flame,1,{Better to burn half as bright.},WOOD_PICKAXE,{INFINITE_DURABILITY},{DURABILITY=10}
-Porphyria's Envy,1,{The High Priestess lived and died&In the temple of the god she loved.},GOLD_SWORD,{},{DAMAGE_UNDEAD=10&FIRE_ASPECT=2&KNOCKBACK=3}
-Teshbian's Sceptre,1,{Wood of his wood&Now given to you.},FENCE,{},{DAMAGE_UNDEAD=5&DAMAGE_ARTHROPODS=5&KNOCKBACK=4&LOOT_BONUS_MOBS=5}
+Porphyria's Envy,1,{The High Priestess lived and died&in the temple of the god she loved.},GOLD_SWORD,{},{DAMAGE_UNDEAD=5&FIRE_ASPECT=5}
+Teshbian's Sceptre,1,{Wood of his wood&Now given to you.},FENCE,{},{DAMAGE_UNDEAD=5&DAMAGE_ARTHROPODS=5&KNOCKBACK=3&LOOT_BONUS_MOBS=5}
 HSAR's Final Creation,1,{In his final days HSAR devised&fearsome weapons of terrible power.},DIAMOND_SWORD,{},{DAMAGE_ALL=10&DAMAGE_UNDEAD=5}
 Chicken Scale,1,{Used by Crohakon himself.},CHAINMAIL_CHESTPLATE,{},{DURABILITY=10}
+Narael's Harvester,2,{Lost with the General at the last&defence of the First Temple.},IRON_AXE,{},{DAMAGE_ALL=5&LOOT_BONUS_MOBS=10}
+Royal Surcoat,2,{Issued to the Royal Guards&as the townships were overrun.},DIAMOND_CHESTPLATE,{},{PROTECTION_ENVIRONMENTAL=5&PROTECTION_FIRE&PROTECTION_FALL=5}

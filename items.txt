@@ -1,3 +1,9 @@
-DIAMOND_SWORD,1,{ordinary&uncommon&rare&legendary}
-IRON_SWORD,1,{ordinary&uncommon&rare&legendary}
-DIAMOND_HELMET,1,{ordinary&uncommon&rare&legendary}
+DIAMOND_SWORD,10,{ordinary&uncommon&rare&legendary}
+IRON_SWORD,10,{ordinary&uncommon&rare&legendary}
+STONE_SWORD,10,{ordinary&uncommon&rare&legendary}
+WOOD_SWORD,10,{ordinary&uncommon&rare&legendary}
+DIAMOND_AXE,10,{ordinary&uncommon&rare&legendary}
+IRON_AXE,10,{ordinary&uncommon&rare&legendary}
+STONE_AXE,10,{ordinary&uncommon&rare&legendary}
+WOOD_AXE,10,{ordinary&uncommon&rare&legendary}
+BOW,30,{ordinary&uncommon&rare&legendary}

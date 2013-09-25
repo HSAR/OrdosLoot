@@ -19,7 +19,7 @@ public class NameTable {
 		// initialise table objects
 		nameTable = new ArrayList<NameTableEntry>();
 	}
-	
+
 	public int size() {
 		return nameTable.size();
 	}
@@ -27,15 +27,12 @@ public class NameTable {
 	public void addName(String name, int weight, List<Material> validMats, List<EnchantmentData> enchs) {
 		for (int i = 0; i < weight; i++) {
 			// add into the table $weight number of times.
-			this.addEntry(new NameTableEntry(name, weight, validMats, enchs));
+			nameTable.add(new NameTableEntry(name, weight, validMats, enchs));
 		}
 	}
 
 	public void addEntry(NameTableEntry nte) {
-		for (int i = 0; i < nte.getWeight(); i++) {
-			// add into the table $weight number of times.
-			nameTable.add(nte);
-		}
+		nameTable.add(nte);
 	}
 
 	/**

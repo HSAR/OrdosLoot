@@ -16,7 +16,7 @@ public class DropTable {
 		// initialise table objects
 		dropTable = new ArrayList<DropTableEntry>();
 	}
-	
+
 	public int size() {
 		return dropTable.size();
 	}
@@ -24,15 +24,14 @@ public class DropTable {
 	public void addDrop(Material itemType, int weight, List<Quality> validQualities) {
 		for (int i = 0; i < weight; i++) {
 			// add into the table $weight number of times.
-			this.addEntry(new DropTableEntry(itemType, weight, validQualities));
+			dropTable.add(new DropTableEntry(itemType, weight, validQualities));
 		}
+		System.out.println(dropTable.size());
 	}
 
 	public void addEntry(DropTableEntry dte) {
-		for (int i = 0; i < dte.getWeight(); i++) {
-			// add into the table $weight number of times.
-			dropTable.add(dte);
-		}
+		// add into the table $weight number of times.
+		dropTable.add(dte);
 	}
 
 	/**
@@ -61,7 +60,8 @@ public class DropTable {
 	 */
 	public DropTableEntry getDropFromTable(double val) {
 		if (dropTable.size() > 0) {
-			int intVal = (int) (val * dropTable.size());
+			int intVal = (int) ((val) * dropTable.size());
+			// System.out.println(dropTable.get(intVal).getMaterial().toString());
 			return dropTable.get(intVal);
 		} else {
 			return null;
@@ -69,9 +69,9 @@ public class DropTable {
 	}
 
 	public static Material[] getValidItems() {
-		Material[] result = { Material.BOW, Material.DIAMOND_SWORD, Material.IRON_SWORD, Material.GOLD_SWORD, Material.STONE_SWORD, Material.WOOD_SWORD,
-				Material.DIAMOND_AXE, Material.IRON_AXE, Material.GOLD_AXE, Material.STONE_AXE, Material.WOOD_AXE, Material.DIAMOND_HELMET,
-				Material.IRON_HELMET, Material.CHAINMAIL_HELMET, Material.GOLD_HELMET, Material.LEATHER_HELMET,
+		Material[] result = { Material.BOW, Material.DIAMOND_SWORD, Material.IRON_SWORD, Material.GOLD_SWORD, Material.STONE_SWORD,
+				Material.WOOD_SWORD, Material.DIAMOND_AXE, Material.IRON_AXE, Material.GOLD_AXE, Material.STONE_AXE, Material.WOOD_AXE,
+				Material.DIAMOND_HELMET, Material.IRON_HELMET, Material.CHAINMAIL_HELMET, Material.GOLD_HELMET, Material.LEATHER_HELMET,
 				Material.DIAMOND_CHESTPLATE, Material.IRON_CHESTPLATE, Material.CHAINMAIL_CHESTPLATE, Material.GOLD_CHESTPLATE,
 				Material.LEATHER_CHESTPLATE, Material.DIAMOND_LEGGINGS, Material.IRON_LEGGINGS, Material.CHAINMAIL_LEGGINGS,
 				Material.GOLD_LEGGINGS, Material.LEATHER_LEGGINGS, Material.DIAMOND_BOOTS, Material.IRON_BOOTS, Material.CHAINMAIL_BOOTS,

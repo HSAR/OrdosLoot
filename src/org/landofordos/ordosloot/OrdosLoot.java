@@ -606,18 +606,22 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 	private EnchantmentData getEnchantment(String ench, String level) {
 		Enchantment e = Enchantment.getByName(ench);
 		if (e != null) {
-			if (level.endsWith("*")) {
-				// if input ends with * generate a random level up to the input.
-				StringBuilder sb = new StringBuilder(level);
-				sb.setLength(sb.length() - 1);
-				return new EnchantmentData(e, Integer.parseInt(sb.toString()), false, true);
-			} else {
-				return new EnchantmentData(e, Integer.parseInt(level));
+			try {
+				if (level.endsWith("*")) {
+					// if input ends with * generate a random level up to the input.
+					StringBuilder sb = new StringBuilder(level);
+					sb.setLength(sb.length() - 1);
+					return new EnchantmentData(e, Integer.parseInt(sb.toString()), false, true);
+				} else {
+					return new EnchantmentData(e, Integer.parseInt(level));
+				}
+			} catch (NumberFormatException arg0) {
+				logger.log(Level.SEVERE, "Enchantment " + ench + " of level " + level + " could not be loaded from file.");
+				return null;
 			}
-		} else {
-			logger.log(Level.SEVERE, "Enchantment " + ench + " could not be loaded from file.");
-			return null;
 		}
+		logger.log(Level.SEVERE, "Enchantment " + ench + " could not be loaded from file.");
+		return null;
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)

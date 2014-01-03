@@ -1,18 +1,10 @@
 pluginvars:
-    # Don't touch the value of firstrun!
-    firstrun: true
-    verboselogging: false
-    # this variable should... be pretty damn obvious
-    enabled: true
+  firstrun: false
+  verboselogging: false
+  enabled: true
 rarities:
-    # drop rates from Torchlight 2
-    # Normal - 98.06%
-    # Green - 0.98%
-    # Blue - 0.88%
-    # Unique - 0.069%
-    ordinary: 0.0
-    uncommon: 0.012
-    rare: 0.008
-    legendary: 0.002
-    unique: 0.0007
-    # Warning: OrdosLoot will fail to load if these numbers total more than 1.
+  ordinary: 0.0
+  uncommon: 0.002
+  rare: 0.0008
+  legendary: 0.00004
+  unique: 0.000002

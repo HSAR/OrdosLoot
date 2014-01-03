@@ -12,13 +12,7 @@ public class DropTableEntry {
 	List<Quality> validQuals;
 
 	public DropTableEntry(Material itemType, int weight, List<Quality> validQualities) {
-		if ((itemType.toString().contains("SWORD")) || (itemType.toString().contains("AXE"))|| (itemType.toString().contains("BOW"))) {
-			this.dropType = DropType.weapon;
-		}
-		if ((itemType.toString().contains("HELMET")) || (itemType.toString().contains("CHESTPLATE"))
-				|| (itemType.toString().contains("LEGGINGS")) || (itemType.toString().contains("BOOTS"))) {
-			this.dropType = DropType.armour;
-		}
+		dropType = DropType.getType(itemType);
 		if (dropType == null) {
 			throw new RuntimeException("Improper type argument given to DropTableEntry");
 		}

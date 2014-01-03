@@ -122,7 +122,7 @@ public class UniqueListener implements Listener {
 		Player player = event.getPlayer();
 		ItemStack is = player.getItemInHand();
 		if ((is != null) && (is.hasItemMeta())) {
-			plugin.getLogger().info("TEST");
+			//plugin.getLogger().info("TEST");
 			ItemMeta im = is.getItemMeta();
 			if (im.hasEnchants()) {
 				// #XXX: CHECK #0 - Prevent users from placing unique items.

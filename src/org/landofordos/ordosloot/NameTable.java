@@ -2,11 +2,8 @@ package org.landofordos.ordosloot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.landofordos.ordosloot.QualityTable.QualityTableEntry;
 
 public class NameTable {
 

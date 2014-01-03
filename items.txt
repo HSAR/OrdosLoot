@@ -1,9 +1,38 @@
+// Swords
 DIAMOND_SWORD,10,{ordinary&uncommon&rare&legendary}
-IRON_SWORD,10,{ordinary&uncommon&rare&legendary}
-STONE_SWORD,10,{ordinary&uncommon&rare&legendary}
-WOOD_SWORD,10,{ordinary&uncommon&rare&legendary}
-DIAMOND_AXE,10,{ordinary&uncommon&rare&legendary}
-IRON_AXE,10,{ordinary&uncommon&rare&legendary}
-STONE_AXE,10,{ordinary&uncommon&rare&legendary}
-WOOD_AXE,10,{ordinary&uncommon&rare&legendary}
-BOW,30,{ordinary&uncommon&rare&legendary}
+IRON_SWORD,20,{ordinary&uncommon&rare&legendary}
+GOLD_SWORD,30,{ordinary&uncommon&rare&legendary}
+STONE_SWORD,30,{ordinary&uncommon&rare&legendary}
+WOOD_SWORD,40,{ordinary&uncommon&rare&legendary}
+// Axes
+DIAMOND_AXE,6,{ordinary&uncommon&rare&legendary}
+IRON_AXE,12,{ordinary&uncommon&rare&legendary}
+GOLD_AXE,24,{ordinary&uncommon&rare&legendary}
+STONE_AXE,24,{ordinary&uncommon&rare&legendary}
+WOOD_AXE,30,{ordinary&uncommon&rare&legendary}
+// Bows
+BOW,60,{ordinary&uncommon&rare&legendary}
+// Helmets
+DIAMOND_HELMET,5,{ordinary&uncommon&rare&legendary}
+IRON_HELMET,10,{ordinary&uncommon&rare&legendary}
+GOLD_HELMET,15,{ordinary&uncommon&rare&legendary}
+STONE_HELMET,15,{ordinary&uncommon&rare&legendary}
+WOOD_HELMET,20,{ordinary&uncommon&rare&legendary}
+// Chest Armors
+DIAMOND_CHESTPLATE,5,{ordinary&uncommon&rare&legendary}
+IRON_CHESTPLATE,10,{ordinary&uncommon&rare&legendary}
+GOLD_CHESTPLATE,15,{ordinary&uncommon&rare&legendary}
+STONE_CHESTPLATE,15,{ordinary&uncommon&rare&legendary}
+WOOD_CHESTPLATE,20,{ordinary&uncommon&rare&legendary}
+// Leggings
+DIAMOND_LEGGINGS,5,{ordinary&uncommon&rare&legendary}
+IRON_LEGGINGS,10,{ordinary&uncommon&rare&legendary}
+GOLD_LEGGINGS,15,{ordinary&uncommon&rare&legendary}
+STONE_LEGGINGS,15,{ordinary&uncommon&rare&legendary}
+WOOD_LEGGINGS,20,{ordinary&uncommon&rare&legendary}
+// Boots
+DIAMOND_BOOTS,5,{ordinary&uncommon&rare&legendary}
+IRON_BOOTS,10,{ordinary&uncommon&rare&legendary}
+GOLD_BOOTS,15,{ordinary&uncommon&rare&legendary}
+STONE_BOOTS,15,{ordinary&uncommon&rare&legendary}
+WOOD_BOOTS,20,{ordinary&uncommon&rare&legendary}

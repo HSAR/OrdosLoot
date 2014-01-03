@@ -14,9 +14,13 @@ permissions:
         children:
             ordosloot.reloadconfig: true 
             ordosloot.ingametoggle: true
+            ordosloot.giveloot: true
     ordosloot.reloadconfig:
         description: Allows access to reloading the plugin's configuration file
         default: op
     ordosloot.ingametoggle:
         description: Allows a player to toggle the plugin on and off in-game
+        default: op
+    ordosloot.giveloot:
+        description: Allows a player give themselves items.
         default: op

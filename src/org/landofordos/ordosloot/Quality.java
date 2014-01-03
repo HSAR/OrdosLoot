@@ -4,8 +4,8 @@ import org.bukkit.ChatColor;
 
 public enum Quality {
 
-	ordinary("Ordinary", ChatColor.WHITE), uncommon("Uncommon", ChatColor.DARK_GREEN), rare("Rare", ChatColor.DARK_AQUA), legendary(
-			"Legendary", ChatColor.YELLOW), unique("Unique", ChatColor.GOLD);
+	ORDINARY("Ordinary", ChatColor.WHITE), UNCOMMON("Uncommon", ChatColor.DARK_GREEN), RARE("Rare", ChatColor.DARK_AQUA), LEGENDARY(
+			"Legendary", ChatColor.YELLOW), UNIQUE("Unique", ChatColor.GOLD);
 
 	private String value;
 	private ChatColor colorCode;
@@ -28,6 +28,21 @@ public enum Quality {
 		return this.getValue();
 	}
 
+	/**
+	 * Returns the quality matching the input string.
+	 * 
+	 * @param name
+	 *            Name to match into a Quality
+	 * @return Quality matching the name, null if not found.
+	 */
+	public static Quality getByName(String name) {
+		try {
+			return Quality.valueOf(name.toUpperCase());
+		} catch (IllegalArgumentException arg0) {
+			return null;
+		}
+	}
+
 	public static Quality getEnum(String value) {
 
 		if (value == null)
@@ -42,7 +57,7 @@ public enum Quality {
 	}
 
 	public static Quality[] getQualities() { // hard-coded to return them in the correct order for use in table generation
-		Quality[] qualities = { unique, legendary, rare, uncommon, ordinary };
+		Quality[] qualities = { UNIQUE, LEGENDARY, RARE, UNCOMMON, ORDINARY };
 		return qualities;
 	}
 }

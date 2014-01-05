@@ -26,7 +26,6 @@ public class DropTable {
 			// add into the table $weight number of times.
 			dropTable.add(new DropTableEntry(itemType, weight, validQualities));
 		}
-		System.out.println(dropTable.size());
 	}
 
 	public void addEntry(DropTableEntry dte) {

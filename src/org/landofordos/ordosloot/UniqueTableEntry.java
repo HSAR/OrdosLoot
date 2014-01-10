@@ -1,48 +1,42 @@
 package org.landofordos.ordosloot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Material;
 
-public class UniqueTableEntry {
+public class UniqueTableEntry extends AbstractTableEntry {
 
-	private String name;
-	private List<String> desc;
-	private int weight;
-	private List<EffectData> effects;
-	private List<EnchantmentData> enchantments;
-	private Material itemType;
+    private List<String> desc;
+    private List<EffectData> effects;
 
-	public UniqueTableEntry(String name, int weight, List<String> desc, Material itemType, List<EffectData> effects, List<EnchantmentData> enchs) {
-		this.name = name;
-		this.weight = weight;
-		this.desc = desc;
-		this.itemType = itemType;
-		this.effects = effects;
-		this.enchantments = enchs;
-	}
+    /**
+     * @param name
+     *            - Name of the item.
+     * @param weight
+     * @param desc
+     * @param itemTypes
+     * @param effects
+     * @param enchs
+     * 
+     *            UniqueTable entry with all the data required to create a unique item.
+     */
+    public UniqueTableEntry(String name, int weight, List<String> desc, List<Material> itemTypes, List<EffectData> effects,
+            List<EnchantmentData> enchs) {
+        super(name, weight, itemTypes, enchs);
+        this.desc = desc;
+        this.effects = effects;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public List<String> getDesc() {
+        return desc;
+    }
 
-	public int getWeight() {
-		return weight;
-	}
-	
-	public List<String> getDesc() {
-		return desc;
-	}
-	
-	public Material getItemType() {
-		return itemType;
-	}
+    public Material getItemType() {
+        return itemTypes.get(0);
+    }
 
-	public List<EffectData> getEffects() {
-		return effects;
-	}
-
-	public List<EnchantmentData> getEnchantments() {
-		return enchantments;
-	}
+    public List<EffectData> getEffects() {
+        return effects;
+    }
 }

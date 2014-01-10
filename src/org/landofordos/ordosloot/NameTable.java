@@ -42,7 +42,7 @@ public class NameTable {
 	public NameTable filterByMaterial(Material filterMat) {
 		NameTable result = new NameTable();
 		for (NameTableEntry nte : nameTable) {
-			if (nte.getValidMaterials().contains(filterMat)) {
+			if (nte.getItemTypes().contains(filterMat)) {
 				result.addEntry(nte);
 			}
 		}
@@ -56,7 +56,7 @@ public class NameTable {
 	 *            - the seed value (between 0 and 1).
 	 * @return A NameTableEntry object with the string name and the enchantments to apply.
 	 */
-	public NameTableEntry getNameFromTable(double val) {
+	public AbstractTableEntry getNameFromTable(double val) {
 		if (nameTable.size() > 0) {
 			int intVal = (int) (val * nameTable.size());
 			return nameTable.get(intVal);

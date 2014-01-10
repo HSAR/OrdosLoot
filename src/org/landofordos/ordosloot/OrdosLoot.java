@@ -453,7 +453,9 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                 // validation check before entry
                 if ((uniqueData[0] != null) && (Integer.parseInt(uniqueData[1]) > 0) && (desc != null) && (m != null) && (effs != null)
                         && (enchs != null)) {
-                    uniqueTable.addUnique(uniqueData[0], Integer.parseInt(uniqueData[1]), desc, m, effs, enchs);
+                    List<Material> matList = new ArrayList<Material>(1);
+                    matList.add(m);
+                    uniqueTable.addUnique(uniqueData[0], Integer.parseInt(uniqueData[1]), desc, matList, effs, enchs);
                 }
             }
         }
@@ -491,12 +493,17 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                 Player player = (Player) sender;
                 Quality qual = Quality.getByName(args[1]);
                 Material mat = null;
-                if (args.length == 3) {
+                if (args.length > 2) {
                     mat = Material.getMaterial(args[2]);
                 }
                 if (qual != null) {
                     if (qual.equals(Quality.UNIQUE)) {
-                        player.getInventory().addItem(this.generateUniqueDrop(rng.nextDouble()));
+                        if (args.length > 2) {
+                            // uniques are deterministic and, well, unique, so add by name.
+                            player.getInventory().addItem(this.generateUniqueDrop(uniqueTable.getUniqueByName(args[2])));
+                        } else {
+                            player.getInventory().addItem(this.generateNewUniqueDrop(rng.nextDouble()));
+                        }
                     } else {
                         if ((mat != null) && (DropType.getType(mat) != null)) {
                             ItemStack item = this.generateItem(DropType.getType(mat), mat, qual);
@@ -532,7 +539,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
         if (quality != null) {
             // unique items have a seperate generation
             if (quality.equals(Quality.UNIQUE)) {
-                return generateUniqueDrop(rng.nextDouble());
+                return generateNewUniqueDrop(rng.nextDouble());
             }
             // decide the dropped item
             DropTable validDropTable = dropTable.filterByQuality(quality);
@@ -553,9 +560,9 @@ public class OrdosLoot extends JavaPlugin implements Listener {
         NameTable coreTable = null;
         NameTable suffTable = null;
         // placeholders for the prefix, core and suffix components.
-        NameTableEntry pref = null;
-        NameTableEntry core = null;
-        NameTableEntry suff = null;
+        AbstractTableEntry pref = null;
+        AbstractTableEntry core = null;
+        AbstractTableEntry suff = null;
         EnchantQueue enchsToAdd = new EnchantQueue();
         switch (type) {
         case armour:
@@ -614,9 +621,12 @@ public class OrdosLoot extends JavaPlugin implements Listener {
         return item;
     }
 
-    private ItemStack generateUniqueDrop(double val) {
+    private ItemStack generateNewUniqueDrop(double val) {
         // Draw and generate a new unique.
-        UniqueTableEntry ute = uniqueTable.getUniqueFromTable(rng.nextDouble());
+        return generateUniqueDrop(uniqueTable.getUniqueFromTable(rng.nextDouble()));
+    }
+
+    private ItemStack generateUniqueDrop(UniqueTableEntry ute) {
         // get itemtype and retrieve metadata store
         ItemStack item = new ItemStack(ute.getItemType());
         ItemMeta meta = item.getItemMeta();

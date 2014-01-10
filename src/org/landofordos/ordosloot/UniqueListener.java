@@ -126,10 +126,10 @@ public class UniqueListener implements Listener {
     @EventHandler
     public void onItemHeld(PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
-        ItemStack is = player.getItemInHand();
-        if ((is != null) && (is.hasItemMeta())) {
-            // plugin.getLogger().info("TEST");
-            ItemMeta im = is.getItemMeta();
+        ItemStack itemInHand = player.getInventory().getItem(event.getNewSlot());
+        // ADD EFFECTS ON ITEM IN HAND
+        if ((itemInHand != null) && (itemInHand.hasItemMeta())) {
+            ItemMeta im = itemInHand.getItemMeta();
             if (im.hasDisplayName()) {
                 // check whether the item's display name is one we are tracking
                 for (String uniqueItemName : uniques) {
@@ -140,6 +140,26 @@ public class UniqueListener implements Listener {
                             if (ed.equals(UniqueEffect.DAMAGE_RESISTANCE)) {
                                 player.addPotionEffect(
                                         new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, ed.getLevel(), false), true);
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // REMOVE EFFECTS WHEN ITEM NOT IN HAND
+        ItemStack itemLastInHand = player.getInventory().getItem(event.getPreviousSlot());
+        if ((itemLastInHand != null) && (itemLastInHand.hasItemMeta())) {
+            ItemMeta im = itemLastInHand.getItemMeta();
+            if (im.hasDisplayName()) {
+                // check whether the item's display name is one we are tracking
+                for (String uniqueItemName : uniques) {
+                    if (im.getDisplayName().equals(uniqueItemName)) {
+                        UniqueTableEntry ute = plugin.getUniqueItemData(im.getDisplayName());
+                        // #XXX: CHECK #3 - DAMAGE RESISTANCE EFFECT
+                        for (EffectData ed : ute.getEffects()) {
+                            if (ed.equals(UniqueEffect.DAMAGE_RESISTANCE)) {
+                                player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
 
                             }
                         }

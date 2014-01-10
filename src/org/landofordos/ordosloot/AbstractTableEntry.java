@@ -3,8 +3,6 @@ package org.landofordos.ordosloot;
 import java.util.List;
 
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public abstract class AbstractTableEntry {
 

@@ -9,11 +9,11 @@ public class UniqueTableEntry {
 	private String name;
 	private List<String> desc;
 	private int weight;
-	private List<UniqueEffect> effects;
+	private List<EffectData> effects;
 	private List<EnchantmentData> enchantments;
 	private Material itemType;
 
-	public UniqueTableEntry(String name, int weight, List<String> desc, Material itemType, List<UniqueEffect> effects, List<EnchantmentData> enchs) {
+	public UniqueTableEntry(String name, int weight, List<String> desc, Material itemType, List<EffectData> effects, List<EnchantmentData> enchs) {
 		this.name = name;
 		this.weight = weight;
 		this.desc = desc;
@@ -38,7 +38,7 @@ public class UniqueTableEntry {
 		return itemType;
 	}
 
-	public List<UniqueEffect> getEffects() {
+	public List<EffectData> getEffects() {
 		return effects;
 	}
 

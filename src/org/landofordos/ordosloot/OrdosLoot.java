@@ -422,15 +422,16 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                 }
                 // effect list
                 String[] effectData = splitConfigList(uniqueData[4]);
-                List<UniqueEffect> effs = new ArrayList<UniqueEffect>();
+                List<EffectData> effs = new ArrayList<EffectData>();
                 // if empty, skip
-                for (String effect : effectData) {
-                    if (!effect.equals("")) {
-                        UniqueEffect ue = UniqueEffect.valueOf(effect);
+                for (String effectPair : effectData) {
+                    if (!effectPair.equals("")) {
+                        String[] effectLine = effectPair.split("=");
+                        UniqueEffect ue = UniqueEffect.valueOf(effectLine[0]);
                         if (ue != null) {
-                            effs.add(ue);
+                            effs.add(new EffectData(ue, Integer.parseInt(effectLine[1])));
                         } else {
-                            logger.log(Level.SEVERE, "Unique item data could not be loaded from file.");
+                            logger.log(Level.SEVERE, "Unique effect " + effectLine[0] + " could not be loaded from file.");
                         }
                     }
                 }

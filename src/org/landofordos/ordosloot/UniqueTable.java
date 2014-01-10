@@ -21,7 +21,7 @@ public class UniqueTable {
 		return uniqueTable.size();
 	}
 
-	public void addUnique(String name, int weight, List<String> desc, Material itemType, List<UniqueEffect> effects,
+	public void addUnique(String name, int weight, List<String> desc, Material itemType, List<EffectData> effects,
 			List<EnchantmentData> enchs) {
 		for (int i = 0; i < weight; i++) {
 			// add into the table $weight number of times.

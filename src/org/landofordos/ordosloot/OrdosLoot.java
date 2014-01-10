@@ -630,17 +630,21 @@ public class OrdosLoot extends JavaPlugin implements Listener {
     }
 
     private ItemStack generateUniqueDrop(UniqueTableEntry ute) {
-        // get itemtype and retrieve metadata store
-        ItemStack item = new ItemStack(ute.getItemType());
-        ItemMeta meta = item.getItemMeta();
-        // set name, description and enchants
-        meta.setDisplayName(Quality.UNIQUE.getColor() + ute.getName());
-        meta.setLore(ute.getDesc());
-        for (EnchantmentData ench : ute.getEnchantments()) {
-            meta.addEnchant(ench.getEnchantment(), ench.getLevel(), true);
+        if (ute != null) {
+            // get itemtype and retrieve metadata store
+            ItemStack item = new ItemStack(ute.getItemType());
+            ItemMeta meta = item.getItemMeta();
+            // set name, description and enchants
+            meta.setDisplayName(Quality.UNIQUE.getColor() + ute.getName());
+            meta.setLore(ute.getDesc());
+            for (EnchantmentData ench : ute.getEnchantments()) {
+                meta.addEnchant(ench.getEnchantment(), ench.getLevel(), true);
+            }
+            item.setItemMeta(meta);
+            return item;
+        } else {
+            return null;
         }
-        item.setItemMeta(meta);
-        return item;
     }
 
     /**

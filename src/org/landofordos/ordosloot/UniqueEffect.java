@@ -6,17 +6,25 @@ package org.landofordos.ordosloot;
  *         Actual game effect implementation is in the UniqueListener class.
  */
 public enum UniqueEffect {
+
     INFINITE_DURABILITY, //
     DAMAGE_RESISTANCE, // implemented
-    HEALTH_BOOST, //
-    BLINDNESS, //
-    HUNGER, //
-    WEAKNESS, //
-    JUMP_HEIGHT, //
-    SPEED_PLUS, //
-    SPEED_MINUS, //
-    NIGHT_VISION, //
-    FIRE_RESISTANCE, //
-    CONSTANT_HARM, //
-    LIFE_LEECH // apply REGENERATION when mob hit
+    HEALTH_BOOST, // implemented
+    BLINDNESS, // implemented
+    HUNGER, // implemented
+    WEAKNESS, // implemented
+    JUMP_HEIGHT, // implemented
+    SPEED, // implemented
+    NIGHT_VISION, // implemented
+    FIRE_RESISTANCE, // implemented
+    POISON, // implemented
+    LIFE_LEECH; // apply REGENERATION when damaging enemies
+
+    public static UniqueEffect getByName(String name) {
+        try {
+            return valueOf(name);
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
 }

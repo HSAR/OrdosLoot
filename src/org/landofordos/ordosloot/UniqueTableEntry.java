@@ -2,7 +2,6 @@ package org.landofordos.ordosloot;
 
 import java.util.List;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -51,9 +50,11 @@ public class UniqueTableEntry extends AbstractTableEntry {
      */
     public boolean equals(ItemStack item) {
         ItemMeta im = item.getItemMeta();
-        if (im.getDisplayName().equalsIgnoreCase(ChatColor.GOLD + name)) {
-            if (im.getLore().equals(desc)) {
-                return true;
+        if ((im != null) && (im.hasDisplayName()) & (im.hasLore())) {
+            if (im.getDisplayName().equalsIgnoreCase(Quality.UNIQUE.getColor() + name)) {
+                if (im.getLore().equals(desc)) {
+                    return true;
+                }
             }
         }
         return false;

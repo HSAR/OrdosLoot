@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 public class UniqueTable {
 
@@ -71,8 +72,17 @@ public class UniqueTable {
      */
     public UniqueTableEntry getUniqueByName(String name) {
         for (UniqueTableEntry ute : uniqueTable) {
-            // full or partial match, 
+            // full or partial match,
             if ((ute.getName().equalsIgnoreCase(name)) || (ute.getName().toLowerCase().contains(name.toLowerCase()))) {
+                return ute;
+            }
+        }
+        return null;
+    }
+
+    public UniqueTableEntry getByItemStack(ItemStack i) {
+        for (UniqueTableEntry ute : uniqueTable) {
+            if (ute.equals(i)) {
                 return ute;
             }
         }

@@ -16,23 +16,23 @@ BOW,60,{ordinary&uncommon&rare&legendary}
 DIAMOND_HELMET,5,{ordinary&uncommon&rare&legendary}
 IRON_HELMET,10,{ordinary&uncommon&rare&legendary}
 GOLD_HELMET,15,{ordinary&uncommon&rare&legendary}
-STONE_HELMET,15,{ordinary&uncommon&rare&legendary}
-WOOD_HELMET,20,{ordinary&uncommon&rare&legendary}
+CHAINMAIL_HELMET,15,{ordinary&uncommon&rare&legendary}
+LEATHER_HELMET,20,{ordinary&uncommon&rare&legendary}
 // Chest Armors
 DIAMOND_CHESTPLATE,5,{ordinary&uncommon&rare&legendary}
 IRON_CHESTPLATE,10,{ordinary&uncommon&rare&legendary}
 GOLD_CHESTPLATE,15,{ordinary&uncommon&rare&legendary}
-STONE_CHESTPLATE,15,{ordinary&uncommon&rare&legendary}
-WOOD_CHESTPLATE,20,{ordinary&uncommon&rare&legendary}
+CHAINMAIL_CHESTPLATE,15,{ordinary&uncommon&rare&legendary}
+LEATHER_CHESTPLATE,20,{ordinary&uncommon&rare&legendary}
 // Leggings
 DIAMOND_LEGGINGS,5,{ordinary&uncommon&rare&legendary}
 IRON_LEGGINGS,10,{ordinary&uncommon&rare&legendary}
 GOLD_LEGGINGS,15,{ordinary&uncommon&rare&legendary}
-STONE_LEGGINGS,15,{ordinary&uncommon&rare&legendary}
-WOOD_LEGGINGS,20,{ordinary&uncommon&rare&legendary}
+CHAINMAIL_LEGGINGS,15,{ordinary&uncommon&rare&legendary}
+LEATHER_LEGGINGS,20,{ordinary&uncommon&rare&legendary}
 // Boots
 DIAMOND_BOOTS,5,{ordinary&uncommon&rare&legendary}
 IRON_BOOTS,10,{ordinary&uncommon&rare&legendary}
 GOLD_BOOTS,15,{ordinary&uncommon&rare&legendary}
-STONE_BOOTS,15,{ordinary&uncommon&rare&legendary}
-WOOD_BOOTS,20,{ordinary&uncommon&rare&legendary}
+CHAINMAIL_BOOTS,15,{ordinary&uncommon&rare&legendary}
+LEATHER_BOOTS,20,{ordinary&uncommon&rare&legendary}

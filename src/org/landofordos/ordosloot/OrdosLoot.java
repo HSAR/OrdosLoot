@@ -500,9 +500,12 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                     if (qual.equals(Quality.UNIQUE)) {
                         if (args.length > 2) {
                             // uniques are deterministic and, well, unique, so add by name.
-                            player.getInventory().addItem(this.generateUniqueDrop(uniqueTable.getUniqueByName(args[2])));
+                            player.getInventory().addItem(
+                                    this.generateUniqueDrop(uniqueTable.getUniqueByName(args[2].replaceAll("_", " "))));
+                            return true;
                         } else {
                             player.getInventory().addItem(this.generateNewUniqueDrop(rng.nextDouble()));
+                            return true;
                         }
                     } else {
                         if ((mat != null) && (DropType.getType(mat) != null)) {
@@ -651,6 +654,10 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 
     public UniqueTableEntry getUniqueItemData(String name) {
         return uniqueTable.getUniqueByName(name);
+    }
+
+    public UniqueTable getUniqueTable() {
+        return uniqueTable;
     }
 
     private EnchantmentData getEnchantment(String ench, String level) {

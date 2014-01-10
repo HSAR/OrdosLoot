@@ -1,8 +1,8 @@
 package org.landofordos.ordosloot;
 
-import java.util.List;
 import java.util.Random;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -22,13 +22,13 @@ import org.bukkit.potion.PotionEffectType;
 public class UniqueListener implements Listener {
 
     private OrdosLoot plugin;
-    private List<String> uniques;
+    private UniqueTable uniques;
     // RNG
     Random rng = new Random();
 
     public UniqueListener(OrdosLoot plugin) {
         this.plugin = plugin;
-        uniques = plugin.getUniqueItemNames();
+        uniques = plugin.getUniqueTable();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -44,15 +44,13 @@ public class UniqueListener implements Listener {
             for (ItemStack is : inventory) {
                 if ((is != null) && (is.hasItemMeta())) {
                     ItemMeta im = is.getItemMeta();
-                    if (im.hasDisplayName()) {
-                        // check whether the item's display name is one we are tracking
-                        for (String uniqueItemName : uniques) {
-                            if (im.getDisplayName().equals(uniqueItemName)) {
-                                UniqueTableEntry ute = plugin.getUniqueItemData(im.getDisplayName());
-                                // #XXX: CHECK #1 - INFINITE DURABILITY
-                                if (ute.getEffects().contains(UniqueEffect.INFINITE_DURABILITY)) {
-                                    is.setDurability((short) 1000);
-                                }
+                    if (im.hasLore()) {
+                        // check if the item is a unique
+                        UniqueTableEntry ute = uniques.getByItemStack(player.getItemInHand());
+                        if (ute != null) {
+                            // #XXX: CHECK #1 - INFINITE DURABILITY
+                            if (ute.getEffects().contains(UniqueEffect.INFINITE_DURABILITY)) {
+                                is.setDurability((short) 1000);
                             }
                         }
                     }
@@ -66,16 +64,14 @@ public class UniqueListener implements Listener {
             for (ItemStack is : inventory) {
                 if ((is != null) && (is.hasItemMeta())) {
                     ItemMeta im = is.getItemMeta();
-                    if (im.hasDisplayName()) {
-                        // check whether the item's display name is one we are tracking
-                        for (String uniqueItemName : uniques) {
-                            if (im.getDisplayName().equals(uniqueItemName)) {
-                                UniqueTableEntry ute = plugin.getUniqueItemData(im.getDisplayName());
-                                // #XXX: CHECK #2 - BLOCK CHANCE 5% and 10%
-                                if (ute.getEffects().contains(UniqueEffect.DAMAGE_RESISTANCE)) {
+                    if (im.hasLore()) {
+                        // check if the item is a unique
+                        UniqueTableEntry ute = uniques.getByItemStack(player.getItemInHand());
+                        if (ute != null) {
+                            // #XXX: CHECK #2 - BLOCK CHANCE 5% and 10%
+                            if (ute.getEffects().contains(UniqueEffect.DAMAGE_RESISTANCE)) {
 
-                                    // NOT HERE ANY MORE
-                                }
+                                // NOT HERE ANY MORE
                             }
                         }
                     }
@@ -93,15 +89,13 @@ public class UniqueListener implements Listener {
         for (ItemStack is : inventory) {
             if ((is != null) && (is.hasItemMeta())) {
                 ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName()) {
-                    // check whether the item's display name is one we are tracking
-                    for (String uniqueItemName : uniques) {
-                        if (im.getDisplayName().equals(uniqueItemName)) {
-                            UniqueTableEntry ute = plugin.getUniqueItemData(im.getDisplayName());
-                            // #XXX: CHECK #1 - INFINITE DURABILITY
-                            if (ute.getEffects().contains(UniqueEffect.INFINITE_DURABILITY)) {
-                                is.setDurability((short) 1000);
-                            }
+                if (im.hasLore()) {
+                    // check if the item is a unique
+                    UniqueTableEntry ute = uniques.getByItemStack(player.getItemInHand());
+                    if (ute != null) {
+                        // #XXX: CHECK #1 - INFINITE DURABILITY
+                        if (ute.getEffects().contains(UniqueEffect.INFINITE_DURABILITY)) {
+                            is.setDurability((short) 1000);
                         }
                     }
                 }
@@ -130,20 +124,19 @@ public class UniqueListener implements Listener {
         // ADD EFFECTS ON ITEM IN HAND
         if ((itemInHand != null) && (itemInHand.hasItemMeta())) {
             ItemMeta im = itemInHand.getItemMeta();
-            if (im.hasDisplayName()) {
+            if (im.hasLore()) {
                 // check whether the item's display name is one we are tracking
-                for (String uniqueItemName : uniques) {
-                    if (im.getDisplayName().equals(uniqueItemName)) {
-                        UniqueTableEntry ute = plugin.getUniqueItemData(im.getDisplayName());
-                        // #XXX: CHECK #3 - DAMAGE RESISTANCE EFFECT
-                        for (EffectData ed : ute.getEffects()) {
-                            if (ed.equals(UniqueEffect.DAMAGE_RESISTANCE)) {
-                                player.addPotionEffect(
-                                        new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, ed.getLevel(), false), true);
+                UniqueTableEntry ute = plugin.getUniqueItemData(ChatColor.stripColor(im.getDisplayName()));
+                if (ute != null) {
+                    // #XXX: CHECK #3 - DAMAGE RESISTANCE EFFECT
+                    for (EffectData ed : ute.getEffects()) {
+                        if (ed.equals(UniqueEffect.DAMAGE_RESISTANCE)) {
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, ed.getLevel(),
+                                    false), true);
 
-                            }
                         }
                     }
+
                 }
             }
         }
@@ -151,17 +144,15 @@ public class UniqueListener implements Listener {
         ItemStack itemLastInHand = player.getInventory().getItem(event.getPreviousSlot());
         if ((itemLastInHand != null) && (itemLastInHand.hasItemMeta())) {
             ItemMeta im = itemLastInHand.getItemMeta();
-            if (im.hasDisplayName()) {
-                // check whether the item's display name is one we are tracking
-                for (String uniqueItemName : uniques) {
-                    if (im.getDisplayName().equals(uniqueItemName)) {
-                        UniqueTableEntry ute = plugin.getUniqueItemData(im.getDisplayName());
-                        // #XXX: CHECK #3 - DAMAGE RESISTANCE EFFECT
-                        for (EffectData ed : ute.getEffects()) {
-                            if (ed.equals(UniqueEffect.DAMAGE_RESISTANCE)) {
-                                player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-
-                            }
+            // items must have lore to be a unique
+            if (im.hasLore()) {
+                // check if the item is a unique
+                UniqueTableEntry ute = uniques.getByItemStack(player.getItemInHand());
+                if (ute != null) {
+                    // #XXX: CHECK #3 - DAMAGE RESISTANCE EFFECT
+                    for (EffectData ed : ute.getEffects()) {
+                        if (ed.equals(UniqueEffect.DAMAGE_RESISTANCE)) {
+                            player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
                         }
                     }
                 }

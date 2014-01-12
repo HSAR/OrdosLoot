@@ -1,6 +1,8 @@
 package org.landofordos.ordosloot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import org.bukkit.entity.Entity;
@@ -43,8 +45,10 @@ public class UniqueListener implements Listener {
         if (!event.isCancelled()) {
             // check for player as damage source
             Entity damagerEntity = event.getDamager();
+            List<PotionEffect> potionEffectQueue = new ArrayList<PotionEffect>();
+            Player player = null;
             if (damagerEntity instanceof Player) {
-                Player player = (Player) damagerEntity;
+                player = (Player) damagerEntity;
                 PlayerInventory inventory = player.getInventory();
                 for (ItemStack is : inventory) {
                     if ((is != null) && (is.hasItemMeta())) {
@@ -61,8 +65,7 @@ public class UniqueListener implements Listener {
                                     case LIFE_LEECH:
                                         // heal player for level % of the damage done, each health point takes 50 ticks to heal (at amp = 0)
                                         int ticksToApply = (int) (event.getDamage() * (ed.getLevel() / 100)) * 50;
-                                        player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, ticksToApply, 0, false),
-                                                true);
+                                        potionEffectQueue.add(new PotionEffect(PotionEffectType.REGENERATION, ticksToApply, 0, false));
                                         break;
                                     default:
                                         break;
@@ -74,7 +77,7 @@ public class UniqueListener implements Listener {
                 }
             }
             if (event.getEntityType().equals(EntityType.PLAYER)) {
-                Player player = (Player) event.getEntity();
+                player = (Player) event.getEntity();
                 PlayerInventory inventory = player.getInventory();
                 // check in the player's inventory to see if there's a unique item we're tracking
                 for (ItemStack is : inventory) {
@@ -88,6 +91,14 @@ public class UniqueListener implements Listener {
                                 // NOT HERE ANY MORE
                             }
                         }
+                    }
+                }
+            }
+            // add potion effects at the end of execution in case event is set to cancelled by one of the effects
+            if (!event.isCancelled()) {
+                if (player != null) {
+                    for (PotionEffect pEffect : potionEffectQueue) {
+                        player.addPotionEffect(pEffect, true);
                     }
                 }
             }
@@ -114,7 +125,6 @@ public class UniqueListener implements Listener {
                                 for (EffectData ed : ute.getEffects()) {
                                     switch (ed.getEffect()) {
                                     case HONOURBOUND:
-                                        plugin.getLogger().info("Player released from honourbound effect.");
                                         honourBound.put(player.getName(), false);
                                     default:
                                         break;
@@ -166,10 +176,10 @@ public class UniqueListener implements Listener {
 
     @EventHandler
     public void onItemHeld(PlayerItemHeldEvent event) {
-        // #TODO: Add all effects to queue, check if cancelled before adding them
         if (!event.isCancelled()) {
             Player player = event.getPlayer();
             ItemStack itemInHand = player.getInventory().getItem(event.getNewSlot());
+            List<PotionEffect> potionEffectQueue = new ArrayList<PotionEffect>();
             // ADD EFFECTS ON ITEM IN HAND
             if ((itemInHand != null) && (itemInHand.hasItemMeta())) {
                 ItemMeta im = itemInHand.getItemMeta();
@@ -181,52 +191,50 @@ public class UniqueListener implements Listener {
                         for (EffectData ed : ute.getEffects()) {
                             switch (ed.getEffect()) {
                             case DAMAGE_RESISTANCE:
-                                player.addPotionEffect(
-                                        new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, ed.getLevel() - 1, false),
-                                        true);
+                                potionEffectQueue.add(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE,
+                                        ed.getLevel() - 1, false));
                                 break;
                             case HEALTH_BOOST:
-                                player.addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, Integer.MAX_VALUE,
-                                        ed.getLevel() - 1, false), true);
+                                potionEffectQueue.add(new PotionEffect(PotionEffectType.HEALTH_BOOST, Integer.MAX_VALUE, ed.getLevel() - 1,
+                                        false));
                                 break;
                             case BLINDNESS:
-                                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, ed.getLevel() - 1,
-                                        false), true);
+                                potionEffectQueue.add(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, ed.getLevel() - 1,
+                                        false));
                                 break;
                             case HUNGER:
-                                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, Integer.MAX_VALUE, ed.getLevel() - 1,
-                                        false), true);
+                                potionEffectQueue
+                                        .add(new PotionEffect(PotionEffectType.HUNGER, Integer.MAX_VALUE, ed.getLevel() - 1, false));
                                 break;
                             case WEAKNESS:
-                                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, Integer.MAX_VALUE, ed.getLevel() - 1,
-                                        false), true);
+                                potionEffectQueue.add(new PotionEffect(PotionEffectType.WEAKNESS, Integer.MAX_VALUE, ed.getLevel() - 1,
+                                        false));
                                 break;
                             case JUMP_HEIGHT:
-                                player.addPotionEffect(
-                                        new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, ed.getLevel() - 1, false), true);
+                                potionEffectQueue.add(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, ed.getLevel() - 1, false));
                                 break;
                             case SPEED:
                                 // speed = 1 means amplifier = 0
                                 // speed = -1 means amplifier = -1
                                 if (ed.getLevel() > 0) {
-                                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, ed.getLevel() - 1,
-                                            false), true);
+                                    potionEffectQueue.add(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, ed.getLevel() - 1,
+                                            false));
                                 } else {
-                                    player.addPotionEffect(
-                                            new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, ed.getLevel(), false), true);
+                                    potionEffectQueue
+                                            .add(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, ed.getLevel(), false));
                                 }
                                 break;
                             case NIGHT_VISION:
-                                player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE,
-                                        ed.getLevel() - 1, false), true);
+                                potionEffectQueue.add(new PotionEffect(PotionEffectType.NIGHT_VISION, Integer.MAX_VALUE, ed.getLevel() - 1,
+                                        false));
                                 break;
                             case FIRE_RESISTANCE:
-                                player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE,
-                                        ed.getLevel() - 1, false), true);
+                                potionEffectQueue.add(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE,
+                                        ed.getLevel() - 1, false));
                                 break;
                             case POISON:
-                                player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, Integer.MAX_VALUE, ed.getLevel() - 1,
-                                        false), true);
+                                potionEffectQueue
+                                        .add(new PotionEffect(PotionEffectType.POISON, Integer.MAX_VALUE, ed.getLevel() - 1, false));
                                 break;
                             case HONOURBOUND:
                                 honourBound.put(player.getName(), true);
@@ -293,6 +301,12 @@ public class UniqueListener implements Listener {
                             }
                         }
                     }
+                }
+            }
+            // add potion effects at the end of execution in case event is set to cancelled by one of the effects
+            if (!event.isCancelled()) {
+                for (PotionEffect pEffect : potionEffectQueue) {
+                    player.addPotionEffect(pEffect, true);
                 }
             }
         }

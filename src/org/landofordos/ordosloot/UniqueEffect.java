@@ -18,7 +18,8 @@ public enum UniqueEffect {
     NIGHT_VISION, // implemented
     FIRE_RESISTANCE, // implemented
     POISON, // implemented
-    LIFE_LEECH; // apply REGENERATION when damaging enemies
+    LIFE_LEECH, // apply REGENERATION when damaging enemies
+    HONOURBOUND; // cannot sheathe until enemy killed
 
     public static UniqueEffect getByName(String name) {
         try {

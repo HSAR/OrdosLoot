@@ -500,8 +500,12 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                     if (qual.equals(Quality.UNIQUE)) {
                         if (args.length > 2) {
                             // uniques are deterministic and, well, unique, so add by name.
-                            player.getInventory().addItem(
-                                    this.generateUniqueDrop(uniqueTable.getUniqueByName(args[2].replaceAll("_", " "))));
+                            ItemStack unique = this.generateUniqueDrop(uniqueTable.getUniqueByName(args[2].replaceAll("_", " ")));
+                            if (unique != null) {
+                                player.getInventory().addItem(unique);
+                            } else {
+                                player.sendMessage(ChatColor.RED + "Unique item not found.");
+                            }
                             return true;
                         } else {
                             player.getInventory().addItem(this.generateNewUniqueDrop(rng.nextDouble()));

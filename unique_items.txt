@@ -7,4 +7,5 @@ Narael's Harvester,2,{Wielded by the High Protector&in defence of the First Temp
 Royal Surcoat,5,{Issued to the Royal Guards&while Toldas closed its portals.},DIAMOND_CHESTPLATE,{},{PROTECTION_ENVIRONMENTAL=5&PROTECTION_FIRE=3&PROTECTION_FALL=1}
 Horatius' Greaves,3,{Out spake brave Horatius&the Captain of the Gate},DIAMOND_LEGGINGS,{},{PROTECTION_ENVIRONMENTAL=5&PROTECTION_FIRE=4}
 Longfall Boots,3,{Foot-based momentum armor.},DIAMOND_BOOTS,{},{PROTECTION_FALL=10}
-Defender of the Faith,5,{For God and country.},IRON_CHESTPLATE,{DAMAGE_RESISTANCE=1},{}
+Crossguard,5,{For God and country.},IRON_SWORD,{DAMAGE_RESISTANCE=3},{}
+Faust's Honour,5,{Once drawn it cannot be sheathed&until it has tasted blood.},IRON_SWORD,{HONOURBOUND=1&LIFE_LEECH=40},{LOOT_BONUS_MOBS=1}

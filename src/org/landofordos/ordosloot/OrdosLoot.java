@@ -587,9 +587,9 @@ public class OrdosLoot extends JavaPlugin implements Listener {
         }
         switch (quality) {
         case LEGENDARY:
-            pref = prefTable.getNameFromTable(rng.nextDouble());
-        case RARE:
             suff = suffTable.getNameFromTable(rng.nextDouble());
+        case RARE:
+            pref = prefTable.getNameFromTable(rng.nextDouble());
         case UNCOMMON:
             core = coreTable.getNameFromTable(rng.nextDouble());
             break;

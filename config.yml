@@ -2,6 +2,7 @@ pluginvars:
   firstrun: false
   verboselogging: false
   enabled: true
+  logtofile: true
 rarities:
   ordinary: 0.0
   uncommon: 0.002

@@ -1,18 +1,24 @@
 package org.landofordos.ordosloot;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
@@ -24,6 +30,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,6 +51,10 @@ public class OrdosLoot extends JavaPlugin implements Listener {
     //
     private boolean verbose;
     private boolean useDrops;
+    private boolean logToFile;
+    //
+    protected File logFile;
+    protected final SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
     // RNG
     Random rng;
     // loot generation tables
@@ -97,6 +108,14 @@ public class OrdosLoot extends JavaPlugin implements Listener {
         }
         // plugin effect enabled? retrieve value from config file.
         useDrops = config.getBoolean("pluginvars.enabled");
+        // log to file? retrieve value from config file.
+        logToFile = config.getBoolean("pluginvars.logtofile");
+        if (logToFile) {
+            logger.info("File log enabled.");
+            logFile = new File("log.txt");
+        } else {
+            logger.info("File log disabled.");
+        }
         // load loot rarities from config file
         double total = 0;
         Map<Quality, Double> qualityDropRates = new HashMap<Quality, Double>();
@@ -517,6 +536,9 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                             player.getInventory().addItem(item);
                             logger.info(qual + " item \"" + item.getItemMeta().getDisplayName() + "\"" + " given to player "
                                     + player.getName() + ".");
+                            if (logToFile) {
+                                this.logNewLootDrop(qual, item, player, null);
+                            }
                             return true;
                         } else {
                             sender.sendMessage(ChatColor.RED + "Invalid value for ITEMTYPE.");
@@ -689,39 +711,64 @@ public class OrdosLoot extends JavaPlugin implements Listener {
         return null;
     }
 
+    protected void logNewLootDrop(Quality quality, ItemStack item, Player player, LivingEntity entKilled) {
+        PrintStream printstream = null;
+        try {
+            printstream = new PrintStream(new FileOutputStream(logFile, true));
+        } catch (FileNotFoundException e) {
+            logger.log(Level.WARNING, "File log was enabled, but log file could not be written to.");
+        }
+        String dateStamp = dateformat.format((new Date()).getTime());
+        StringBuilder sb = new StringBuilder("[");
+        sb.append(dateStamp);
+        sb.append("]: ");
+        sb.append(quality.toString());
+        sb.append(" item ");
+        sb.append(item.getItemMeta().getDisplayName());
+        sb.append(" dropped for ");
+        sb.append(player.getDisplayName());
+        if (entKilled != null) {
+            sb.append(" from ");
+            sb.append(entKilled.getType().toString());
+        } else {
+            sb.append(" (SPAWNED)");            
+        }
+        printstream.println(sb.toString());
+        // close file
+        printstream.close();
+    }
+
     @EventHandler(priority = EventPriority.NORMAL)
     // EventPriority.NORMAL by default
     public void onEntityDeath(final EntityDeathEvent event) {
-        if (event.getEntity() instanceof Monster) {
-            Monster monsterEnt = (Monster) event.getEntity();
-            if (monsterEnt.getKiller() == null) {
-                return;
-            } else {
-                // #TODO: Implement player permission check before dropping loot.
-                // Player player = monsterEnt.getKiller();
-                // We now know that a player (and not a mob spawner, or any other damage type) killed the mob.
-                // Randomly roll for item quality based on values loaded from file.
-                double dropVal = rng.nextDouble();
-                Quality droppedQual = qualityTable.checkQuality(dropVal);
-                if (droppedQual != null) {
-                    Location loc = monsterEnt.getLocation();
-                    World world = loc.getWorld();
-                    ItemStack item = getNewDroppedItem(droppedQual);
-                    if (item != null) {
-                        world.dropItemNaturally(loc, item);
-                        if (verbose) {
-                            logger.info(droppedQual + " item \"" + item.getItemMeta().getDisplayName() + "\"" + " dropped (" + dropVal
-                                    + ")");
-                        }
-                    } else {
-                        if (verbose) {
-                            logger.info("Could not generate item.");
-                        }
+        LivingEntity ent = event.getEntity();
+        if ((ent instanceof Monster) && (ent != null)) {
+            // #TODO: Implement player permission check before dropping loot.
+            Player player = ent.getKiller();
+            // We now know that a player (and not a mob spawner, or any other damage type) killed the mob.
+            // Randomly roll for item quality based on values loaded from file.
+            double dropVal = rng.nextDouble();
+            Quality droppedQual = qualityTable.checkQuality(dropVal);
+            if (droppedQual != null) {
+                Location loc = ent.getLocation();
+                World world = loc.getWorld();
+                ItemStack item = getNewDroppedItem(droppedQual);
+                if (item != null) {
+                    world.dropItemNaturally(loc, item);
+                    if (verbose) {
+                        logger.info(droppedQual + " item \"" + item.getItemMeta().getDisplayName() + "\"" + " dropped (" + dropVal + ")");
+                    }
+                    if (logToFile) {
+                        this.logNewLootDrop(droppedQual, item, player, ent);
                     }
                 } else {
                     if (verbose) {
-                        logger.info("No item dropped.");
+                        logger.info("Could not generate item.");
                     }
+                }
+            } else {
+                if (verbose) {
+                    logger.info("No item dropped.");
                 }
             }
         }

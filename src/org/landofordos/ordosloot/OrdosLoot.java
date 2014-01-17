@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
@@ -112,7 +111,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
         logToFile = config.getBoolean("pluginvars.logtofile");
         if (logToFile) {
             logger.info("File log enabled.");
-            logFile = new File("log.txt");
+            logFile = new File(this.getDataFolder().getAbsolutePath() + File.separator + "log.txt");
         } else {
             logger.info("File log disabled.");
         }
@@ -723,15 +722,15 @@ public class OrdosLoot extends JavaPlugin implements Listener {
         sb.append(dateStamp);
         sb.append("]: ");
         sb.append(quality.toString());
-        sb.append(" item ");
-        sb.append(item.getItemMeta().getDisplayName());
-        sb.append(" dropped for ");
-        sb.append(player.getDisplayName());
+        sb.append(" item \"");
+        sb.append(ChatColor.stripColor(item.getItemMeta().getDisplayName()));
+        sb.append("\" dropped for ");
+        sb.append(player.getName());
         if (entKilled != null) {
             sb.append(" from ");
-            sb.append(entKilled.getType().toString());
+            sb.append(entKilled.getType());
         } else {
-            sb.append(" (SPAWNED)");            
+            sb.append(" (SPAWNED)");
         }
         printstream.println(sb.toString());
         // close file
@@ -756,7 +755,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                 if (item != null) {
                     world.dropItemNaturally(loc, item);
                     if (verbose) {
-                        logger.info(droppedQual + " item \"" + item.getItemMeta().getDisplayName() + "\"" + " dropped (" + dropVal + ")");
+                        logger.info(droppedQual + " item \"" + ChatColor.stripColor(item.getItemMeta().getDisplayName()) + "\"" + " dropped (" + dropVal + ")");
                     }
                     if (logToFile) {
                         this.logNewLootDrop(droppedQual, item, player, ent);

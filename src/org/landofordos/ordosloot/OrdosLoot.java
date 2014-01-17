@@ -744,30 +744,33 @@ public class OrdosLoot extends JavaPlugin implements Listener {
         if ((ent instanceof Monster) && (ent != null)) {
             // #TODO: Implement player permission check before dropping loot.
             Player player = ent.getKiller();
-            // We now know that a player (and not a mob spawner, or any other damage type) killed the mob.
-            // Randomly roll for item quality based on values loaded from file.
-            double dropVal = rng.nextDouble();
-            Quality droppedQual = qualityTable.checkQuality(dropVal);
-            if (droppedQual != null) {
-                Location loc = ent.getLocation();
-                World world = loc.getWorld();
-                ItemStack item = getNewDroppedItem(droppedQual);
-                if (item != null) {
-                    world.dropItemNaturally(loc, item);
-                    if (verbose) {
-                        logger.info(droppedQual + " item \"" + ChatColor.stripColor(item.getItemMeta().getDisplayName()) + "\"" + " dropped (" + dropVal + ")");
-                    }
-                    if (logToFile) {
-                        this.logNewLootDrop(droppedQual, item, player, ent);
+            if (player != null) {
+                // We now know that a player (and not a mob spawner, or any other damage type) killed the mob.
+                // Randomly roll for item quality based on values loaded from file.
+                double dropVal = rng.nextDouble();
+                Quality droppedQual = qualityTable.checkQuality(dropVal);
+                if (droppedQual != null) {
+                    Location loc = ent.getLocation();
+                    World world = loc.getWorld();
+                    ItemStack item = getNewDroppedItem(droppedQual);
+                    if (item != null) {
+                        world.dropItemNaturally(loc, item);
+                        if (verbose) {
+                            logger.info(droppedQual + " item \"" + ChatColor.stripColor(item.getItemMeta().getDisplayName()) + "\""
+                                    + " dropped (" + dropVal + ")");
+                        }
+                        if (logToFile) {
+                            this.logNewLootDrop(droppedQual, item, player, ent);
+                        }
+                    } else {
+                        if (verbose) {
+                            logger.info("Could not generate item.");
+                        }
                     }
                 } else {
                     if (verbose) {
-                        logger.info("Could not generate item.");
+                        logger.info("No item dropped.");
                     }
-                }
-            } else {
-                if (verbose) {
-                    logger.info("No item dropped.");
                 }
             }
         }

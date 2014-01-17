@@ -2,8 +2,10 @@ package org.landofordos.ordosloot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -30,12 +32,18 @@ public class UniqueListener implements Listener {
     // RNG
     Random rng = new Random();
 
+    // effects applied by this plugin that can be removed without consequence
+    protected HashMap<String, Set<PotionEffectType>> knownEffects;
+
     // effect data values
-    HashMap<String, Boolean> honourBound;
+    protected static HashMap<String, Boolean> honourBound;
 
     public UniqueListener(OrdosLoot plugin) {
         this.plugin = plugin;
         uniques = plugin.getUniqueTable();
+        //
+        knownEffects = new HashMap<String, Set<PotionEffectType>>();
+        //
         honourBound = new HashMap<String, Boolean>();
     }
 
@@ -305,9 +313,30 @@ public class UniqueListener implements Listener {
             }
             // add potion effects at the end of execution in case event is set to cancelled by one of the effects
             if (!event.isCancelled()) {
-                for (PotionEffect pEffect : potionEffectQueue) {
-                    player.addPotionEffect(pEffect, true);
+                Set<PotionEffectType> knownEffectList = knownEffects.get(player.getName());
+                // remove all previous known effects
+                if (knownEffectList != null) {
+                    for (PotionEffect pe : player.getActivePotionEffects()) {
+                        if (pe.getDuration() > 100000) {
+                            for (PotionEffectType pet : knownEffectList) {
+                                if (pe.getType().equals(pet)) {
+                                    player.removePotionEffect(pet);
+                                }
+                            }
+                            knownEffectList = knownEffects.get(player.getName());
+                        }
+                    }
+                } else {
+                    knownEffectList = new HashSet<PotionEffectType>(potionEffectQueue.size());
                 }
+                for (PotionEffect pEffect : potionEffectQueue) {
+                    // add new ones
+                    player.addPotionEffect(pEffect, true);
+                    // register with plugin
+                    knownEffectList.add(pEffect.getType());
+                }
+                // finalise registration
+                knownEffects.put(player.getName(), knownEffectList);
             }
         }
     }

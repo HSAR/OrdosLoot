@@ -722,7 +722,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
         sb.append(dateStamp);
         sb.append("]: ");
         sb.append(quality.toString());
-        sb.append(" item \"");
+        sb.append(" " + item.getType().toString() + " \"");
         sb.append(ChatColor.stripColor(item.getItemMeta().getDisplayName()));
         sb.append("\" dropped for ");
         sb.append(player.getName());

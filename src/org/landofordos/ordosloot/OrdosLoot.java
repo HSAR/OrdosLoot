@@ -748,6 +748,17 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                 // We now know that a player (and not a mob spawner, or any other damage type) killed the mob.
                 // Randomly roll for item quality based on values loaded from file.
                 double dropVal = rng.nextDouble();
+                // Roll extra times if the user has a enchanted weapon with looting+
+                ItemStack itemInHand = player.getItemInHand();
+                if (itemInHand != null) {
+                    if (itemInHand.containsEnchantment(Enchantment.LOOT_BONUS_MOBS)) {
+                        for (int i = 0; i < itemInHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS); i++) {
+                            // take the lowest value (lower == better)
+                            double newDropVal = rng.nextDouble();
+                            dropVal = Math.min(dropVal, newDropVal);
+                        }
+                    }
+                }
                 Quality droppedQual = qualityTable.checkQuality(dropVal);
                 if (droppedQual != null) {
                     Location loc = ent.getLocation();

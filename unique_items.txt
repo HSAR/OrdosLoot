@@ -9,4 +9,4 @@ Horatius' Greaves,3,{Out spake brave Horatius&the Captain of the Gate},DIAMOND_L
 Longfall Boots,3,{Foot-based momentum armor.},DIAMOND_BOOTS,{},{PROTECTION_FALL=10}
 The Defender's Conviction,5,{Commander Victus of the XIII Legion&refused to abandon his men and&was lost with the rest of the XIIIth.},IRON_SWORD,{DAMAGE_RESISTANCE=3},{KNOCKBACK=3}
 Faust's Honour,5,{Once drawn it cannot be sheathed&until it tastes blood.},IRON_SWORD,{HONOURBOUND=1},{DAMAGE_UNDEAD=8&LOOT_BONUS_MOBS=5}
-The Captain's Blade,5,{The Captain of the Imperial Guard&never lost in single combat.},IRON_SWORD,{HEALTH_BOOST=4},{DAMAGE_ALL=10&DAMAGE_UNDEAD=5&DURABILITY=5}
+Ravelin's Edge,5,{The Captain of the Imperial Guard&never lost in single combat.},IRON_SWORD,{HEALTH_BOOST=4},{DAMAGE_ALL=10&DAMAGE_UNDEAD=5&DURABILITY=5}

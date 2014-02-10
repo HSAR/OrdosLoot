@@ -509,48 +509,50 @@ public class OrdosLoot extends JavaPlugin implements Listener {
         if (args.length > 1) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                Quality qual = Quality.getByName(args[1]);
-                Material mat = null;
-                if (args.length > 2) {
-                    mat = Material.getMaterial(args[2]);
-                }
-                if (qual != null) {
-                    if (qual.equals(Quality.UNIQUE)) {
-                        if (args.length > 2) {
-                            // uniques are deterministic and, well, unique, so add by name.
-                            ItemStack unique = this.generateUniqueDrop(uniqueTable.getUniqueByName(args[2].replaceAll("_", " ")));
-                            if (unique != null) {
-                                player.getInventory().addItem(unique);
+                if ((player.hasPermission("ordosloot.giveloot")) && (args[0].equalsIgnoreCase("give"))) {
+                    Quality qual = Quality.getByName(args[1]);
+                    Material mat = null;
+                    if (args.length > 2) {
+                        mat = Material.getMaterial(args[2]);
+                    }
+                    if (qual != null) {
+                        if (qual.equals(Quality.UNIQUE)) {
+                            if (args.length > 2) {
+                                // uniques are deterministic and, well, unique, so add by name.
+                                ItemStack unique = this.generateUniqueDrop(uniqueTable.getUniqueByName(args[2].replaceAll("_", " ")));
+                                if (unique != null) {
+                                    player.getInventory().addItem(unique);
+                                } else {
+                                    player.sendMessage(ChatColor.RED + "Unique item not found.");
+                                }
+                                return true;
                             } else {
-                                player.sendMessage(ChatColor.RED + "Unique item not found.");
+                                player.getInventory().addItem(this.generateNewUniqueDrop(rng.nextDouble()));
+                                return true;
                             }
-                            return true;
                         } else {
-                            player.getInventory().addItem(this.generateNewUniqueDrop(rng.nextDouble()));
-                            return true;
+                            if ((mat != null) && (DropType.getType(mat) != null)) {
+                                ItemStack item = this.generateItem(DropType.getType(mat), mat, qual);
+                                player.getInventory().addItem(item);
+                                logger.info(qual + " item \"" + item.getItemMeta().getDisplayName() + "\"" + " given to player "
+                                        + player.getName() + ".");
+                                if (logToFile) {
+                                    this.logNewLootDrop(qual, item, player, null);
+                                }
+                                return true;
+                            } else {
+                                sender.sendMessage(ChatColor.RED + "Invalid value for ITEMTYPE.");
+                                return true;
+                            }
                         }
                     } else {
-                        if ((mat != null) && (DropType.getType(mat) != null)) {
-                            ItemStack item = this.generateItem(DropType.getType(mat), mat, qual);
-                            player.getInventory().addItem(item);
-                            logger.info(qual + " item \"" + item.getItemMeta().getDisplayName() + "\"" + " given to player "
-                                    + player.getName() + ".");
-                            if (logToFile) {
-                                this.logNewLootDrop(qual, item, player, null);
-                            }
-                            return true;
-                        } else {
-                            sender.sendMessage(ChatColor.RED + "Invalid value for ITEMTYPE.");
-                            return true;
-                        }
+                        sender.sendMessage(ChatColor.RED + "Invalid value for QUALITY.");
+                        return true;
                     }
                 } else {
-                    sender.sendMessage(ChatColor.RED + "Invalid value for QUALITY.");
+                    sender.sendMessage("Cannot do this as you are not a player.");
                     return true;
                 }
-            } else {
-                sender.sendMessage("Cannot do this as you are not a player.");
-                return true;
             }
         }
         return false;

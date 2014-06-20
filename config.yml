@@ -5,7 +5,7 @@ pluginvars:
   logtofile: true
 rarities:
   ordinary: 0.0
-  uncommon: 0.002
-  rare: 0.0008
-  legendary: 0.00004
-  unique: 0.000002
+  uncommon: 0.0005
+  rare: 0.0002
+  legendary: 0.00001
+  unique: 0.0000005

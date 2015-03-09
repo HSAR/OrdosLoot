@@ -1,5 +1,5 @@
 Eternal Flame,1,{Better to burn half as bright.},WOOD_PICKAXE,{INFINITE_DURABILITY=1},{DURABILITY=10}
-Porphyria's Envy,5,{The High Priestess lived and died&in the temple of the god she loved.},GOLD_SWORD,{},{DAMAGE_UNDEAD=5&FIRE_ASPECT=5}
+Porphyria's Envy,5,{The High Priestess served and died&in the temple of the god she loved.},GOLD_SWORD,{},{DAMAGE_UNDEAD=5&FIRE_ASPECT=5}
 Teshbian's Sceptre,1,{Wood of his wood&Now given to you.},FENCE,{},{DAMAGE_UNDEAD=5&DAMAGE_ARTHROPODS=5&KNOCKBACK=3&LOOT_BONUS_MOBS=5}
 HSAR's Final Creation,1,{HSAR paid a terrible price&for the power he sang&into his weapons.},DIAMOND_SWORD,{LIFE_LEECH=50&POISON=4},{DAMAGE_ALL=10}
 Chicken Scale,1,{Used by Crohakon himself.},CHAINMAIL_CHESTPLATE,{},{DURABILITY=10}

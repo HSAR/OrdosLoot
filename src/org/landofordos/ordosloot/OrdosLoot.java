@@ -29,6 +29,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
@@ -36,6 +37,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.ItemSpawnEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -126,24 +129,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
             total += rarity;
             qualityDropRates.put(q, rarity);
         }
-        try {
-            // load available drop items from the file.
-            loadDropTable();
-            // load name tables from their files; extract them if they do not already exist.
-            // #TODO: Allow prefixes to add a description.
-            // #TODO: Crafting
-            // #TODO: Crafting ideas: use rotten meat for DAMAGE_UNDEAD. Use nether quartz because of difficulty of obtaining.
-            loadWeaponNameTables();
-            loadArmourNameTables();
-            // load unique-quality items from the file.
-            loadUniqueTable();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        if (verbose) {
-            logger.info("Loaded " + uniqueTable.size() + " unique items from file.");
-        }
+        reloadTables();
         // check that they do not exceed 1 in total
         if (total > 1) {
             logger.log(Level.SEVERE, "Quality table values exceeded permitted limit.");
@@ -480,6 +466,27 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 
     }
 
+    private void reloadTables() {
+        try {
+            // load available drop items from the file.
+            loadDropTable();
+            // load name tables from their files; extract them if they do not already exist.
+            // #TODO: Allow prefixes to add a description.
+            // #TODO: Crafting
+            // #TODO: Crafting ideas: use rotten meat for DAMAGE_UNDEAD. Use nether quartz because of difficulty of obtaining.
+            loadWeaponNameTables();
+            loadArmourNameTables();
+            // load unique-quality items from the file.
+            loadUniqueTable();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        if (verbose) {
+            logger.info("Loaded " + uniqueTable.size() + " unique items from file.");
+        }
+    }
+    
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         if (args.length == 1) {
             if (args[0].equals("reload")) {
@@ -487,6 +494,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                     sender.sendMessage(ChatColor.YELLOW + "Configuration reloaded.");
                     verbose = config.getBoolean("pluginvars.verboselogging");
                     useDrops = config.getBoolean("pluginvars.enabled");
+                    reloadTables();
                 } else {
                     sender.sendMessage(ChatColor.RED + "You do not have permission to reload OrdosLoot's config.");
                     return true;

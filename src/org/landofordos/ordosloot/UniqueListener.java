@@ -7,8 +7,14 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,6 +24,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -340,4 +347,67 @@ public class UniqueListener implements Listener {
             }
         }
     }
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    // EventPriority.NORMAL by default
+    public void onPlayerDropItem(final PlayerDropItemEvent event) {
+        // REMOVE EFFECTS WHEN ITEM DROPPED
+        Player player = event.getPlayer();
+        ItemStack itemLastInHand = event.getItemDrop().getItemStack();
+        if ((itemLastInHand != null) && (itemLastInHand.hasItemMeta())) {
+            ItemMeta im = itemLastInHand.getItemMeta();
+            // items must have lore to be a unique
+            if (im.hasLore()) {
+                // check if the item is a unique
+                UniqueTableEntry ute = uniques.getByItemStack(itemLastInHand);
+                if (ute != null) {
+                    for (EffectData ed : ute.getEffects()) {
+                        switch (ed.getEffect()) {
+                        case DAMAGE_RESISTANCE:
+                            player.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+                            break;
+                        case HEALTH_BOOST:
+                            player.removePotionEffect(PotionEffectType.HEALTH_BOOST);
+                            break;
+                        case BLINDNESS:
+                            player.removePotionEffect(PotionEffectType.BLINDNESS);
+                            break;
+                        case HUNGER:
+                            player.removePotionEffect(PotionEffectType.HUNGER);
+                            break;
+                        case WEAKNESS:
+                            player.removePotionEffect(PotionEffectType.WEAKNESS);
+                            break;
+                        case JUMP_HEIGHT:
+                            player.removePotionEffect(PotionEffectType.JUMP);
+                            break;
+                        case SPEED:
+                            player.removePotionEffect(PotionEffectType.SPEED);
+                            break;
+                        case NIGHT_VISION:
+                            player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+                            break;
+                        case FIRE_RESISTANCE:
+                            player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+                            break;
+                        case POISON:
+                            player.removePotionEffect(PotionEffectType.POISON);
+                            break;
+                        case HONOURBOUND:
+                            Boolean value = honourBound.get(player.getName());
+                            if (value != null) {
+                                if (value.booleanValue()) {
+                                    event.setCancelled(true);
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }

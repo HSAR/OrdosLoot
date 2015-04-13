@@ -1,4 +1,4 @@
-package org.landofordos.ordosloot;
+package org.landofordos.ordosloot.droptable;
 
 import java.util.ArrayList;
 import java.util.List;

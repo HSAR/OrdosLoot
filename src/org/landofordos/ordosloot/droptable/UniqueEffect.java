@@ -1,4 +1,4 @@
-package org.landofordos.ordosloot;
+package org.landofordos.ordosloot.droptable;
 
 /**
  * @author HSAR A enum setting unique effects that can be applied to items.

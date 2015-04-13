@@ -1,4 +1,4 @@
-package org.landofordos.ordosloot;
+package org.landofordos.ordosloot.droptable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +31,8 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.landofordos.ordosloot.EffectData;
+import org.landofordos.ordosloot.OrdosLoot;
 
 public class UniqueListener implements Listener {
 

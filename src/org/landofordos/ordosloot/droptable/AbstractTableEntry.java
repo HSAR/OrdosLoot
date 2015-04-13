@@ -1,8 +1,9 @@
-package org.landofordos.ordosloot;
+package org.landofordos.ordosloot.droptable;
 
 import java.util.List;
 
 import org.bukkit.Material;
+import org.landofordos.ordosloot.EnchantmentData;
 
 public abstract class AbstractTableEntry {
 

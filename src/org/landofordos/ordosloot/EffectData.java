@@ -1,5 +1,7 @@
 package org.landofordos.ordosloot;
 
+import org.landofordos.ordosloot.droptable.UniqueEffect;
+
 public class EffectData {
 
     UniqueEffect effect;

@@ -1,10 +1,12 @@
-package org.landofordos.ordosloot;
+package org.landofordos.ordosloot.droptable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.landofordos.ordosloot.EffectData;
+import org.landofordos.ordosloot.EnchantmentData;
 
 public class UniqueTable {
 

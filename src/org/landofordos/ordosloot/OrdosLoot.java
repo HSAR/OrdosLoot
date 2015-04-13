@@ -42,7 +42,18 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.landofordos.ordosloot.QualityTable.QualityTableEntry;
+import org.landofordos.ordosloot.droptable.AbstractTableEntry;
+import org.landofordos.ordosloot.droptable.DropTable;
+import org.landofordos.ordosloot.droptable.DropTableEntry;
+import org.landofordos.ordosloot.droptable.DropType;
+import org.landofordos.ordosloot.droptable.NameTable;
+import org.landofordos.ordosloot.droptable.Quality;
+import org.landofordos.ordosloot.droptable.QualityTable;
+import org.landofordos.ordosloot.droptable.UniqueEffect;
+import org.landofordos.ordosloot.droptable.UniqueListener;
+import org.landofordos.ordosloot.droptable.UniqueTable;
+import org.landofordos.ordosloot.droptable.UniqueTableEntry;
+import org.landofordos.ordosloot.droptable.QualityTable.QualityTableEntry;
 
 public class OrdosLoot extends JavaPlugin implements Listener {
 

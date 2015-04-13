@@ -1,4 +1,4 @@
-package org.landofordos.ordosloot;
+package org.landofordos.ordosloot.droptable;
 
 import org.bukkit.Material;
 

@@ -1,12 +1,13 @@
 Eternal Flame,1,{Better to burn half as bright.},WOOD_PICKAXE,{INFINITE_DURABILITY=1},{DURABILITY=10}
 Porphyria's Envy,5,{The High Priestess served and died&in the temple of the god she loved.},GOLD_SWORD,{},{DAMAGE_UNDEAD=5&FIRE_ASPECT=5}
 Teshbian's Sceptre,1,{Wood of his wood&Now given to you.},FENCE,{},{DAMAGE_UNDEAD=5&DAMAGE_ARTHROPODS=5&KNOCKBACK=3&LOOT_BONUS_MOBS=5}
-HSAR's Final Creation,1,{HSAR paid a terrible price&for the power he sang&into his weapons.},DIAMOND_SWORD,{LIFE_LEECH=50&POISON=4},{DAMAGE_ALL=10}
+HSAR's Final Creation,1,{HSAR paid a terrible price&for the power he sang&into his weapons.},DIAMOND_SWORD,{LIFE_LEECH=50&POISON=3},{DAMAGE_ALL=10}
 Chicken Scale,1,{Used by Crohakon himself.},CHAINMAIL_CHESTPLATE,{},{DURABILITY=10}
 Narael's Harvester,2,{Wielded by the High Protector&in defence of the First Temple.},IRON_AXE,{},{DAMAGE_ALL=5&LOOT_BONUS_MOBS=10}
 Royal Surcoat,5,{Issued to the Royal Guards&while Toldas closed its portals.},DIAMOND_CHESTPLATE,{},{PROTECTION_ENVIRONMENTAL=5&PROTECTION_FIRE=3&PROTECTION_FALL=1}
 Horatius' Greaves,3,{Out spake brave Horatius&the Captain of the Gate},DIAMOND_LEGGINGS,{},{PROTECTION_ENVIRONMENTAL=5&PROTECTION_FIRE=4}
-Longfall Boots,3,{Foot-based momentum armor.},DIAMOND_BOOTS,{},{PROTECTION_FALL=10}
+Dragon's Step,3,{Dragon Master Geshtal became frustrated&at the deaths of his workers.},DIAMOND_BOOTS,{},{PROTECTION_FALL=10}
 The Defender's Conviction,5,{Commander Victus of the XIII Legion&refused to abandon his men and&was lost with the rest of the XIIIth.},IRON_SWORD,{DAMAGE_RESISTANCE=3},{KNOCKBACK=3}
 Faust's Honour,5,{Once drawn it cannot be sheathed&until it tastes blood.},IRON_SWORD,{HONOURBOUND=1},{DAMAGE_UNDEAD=8&LOOT_BONUS_MOBS=5}
 Ravelin's Edge,5,{The Captain of the Imperial Guard&never lost in single combat.},IRON_SWORD,{HEALTH_BOOST=4},{DAMAGE_ALL=10&DAMAGE_UNDEAD=5&DURABILITY=5}
+Dirty Business,1,{Imperial High Commissioner Lundberg&had others to do his dirty work.},BOW,{JUMP_HEIGHT=3&NIGHT_VISION=1},{POWER=1}

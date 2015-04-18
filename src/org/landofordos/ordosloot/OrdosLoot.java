@@ -36,9 +36,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -497,7 +502,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
             logger.info("Loaded " + uniqueTable.size() + " unique items from file.");
         }
     }
-    
+
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         if (args.length == 1) {
             if (args[0].equals("reload")) {
@@ -519,6 +524,28 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                     config.set("enabled", useDrops);
                 } else {
                     sender.sendMessage(ChatColor.RED + "You do not have permission to toggle OrdosLoot.");
+                    return true;
+                }
+            }
+            if (args[0].equals("metadata")) {
+                if (sender instanceof Player) {
+                    if (sender.hasPermission("ordosloot.giveloot")) {
+                        Player player = (Player) sender;
+                        ItemStack item = player.getItemInHand();
+                        if (item != null && item.getItemMeta().getDisplayName().endsWith(ChatColor.RESET.toString())) {
+                            ItemMeta meta = item.getItemMeta();
+                            meta = applyPluginMetaData(meta);
+                            item.setItemMeta(meta);
+                        }
+                        player.sendMessage(ChatColor.YELLOW + "Item metadata check now "
+                                + player.getItemInHand().getItemMeta().getDisplayName().endsWith(ChatColor.RESET.toString()));
+                        return true;
+                    } else {
+                        sender.sendMessage(ChatColor.RED + "You do not have permission to generate OrdosLoot items.");
+                        return true;
+                    }
+                } else {
+                    sender.sendMessage("Cannot do this as you are not a player.");
                     return true;
                 }
             }
@@ -569,9 +596,12 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                         return true;
                     }
                 } else {
-                    sender.sendMessage("Cannot do this as you are not a player.");
+                    sender.sendMessage(ChatColor.RED + "You do not have permission to generate OrdosLoot items.");
                     return true;
                 }
+            } else {
+                sender.sendMessage("Cannot do this as you are not a player.");
+                return true;
             }
         }
         return false;
@@ -667,6 +697,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
         meta.setDisplayName(quality.getColor() + name);
         // apply metadata changes and return item
         item.setItemMeta(meta);
+        meta = applyPluginMetaData(meta);
         return item;
     }
 
@@ -686,11 +717,23 @@ public class OrdosLoot extends JavaPlugin implements Listener {
             for (EnchantmentData ench : ute.getEnchantments()) {
                 meta.addEnchant(ench.getEnchantment(), ench.getLevel(), true);
             }
+            // set unbreakable, if necessary
+            if (ute.getEffects().contains(new EffectData(UniqueEffect.INFINITE_DURABILITY, 1))) {
+                meta.spigot().setUnbreakable(true);
+            }
+            meta = applyPluginMetaData(meta);
             item.setItemMeta(meta);
             return item;
         } else {
             return null;
         }
+    }
+
+    private ItemMeta applyPluginMetaData(ItemMeta meta) {
+        if (!meta.getDisplayName().endsWith(ChatColor.RESET.toString())) {
+            meta.setDisplayName(meta.getDisplayName() + ChatColor.RESET);
+        }
+        return meta;
     }
 
     /**
@@ -756,6 +799,55 @@ public class OrdosLoot extends JavaPlugin implements Listener {
         printstream.println(sb.toString());
         // close file
         printstream.close();
+    }
+
+    /**
+     * Returns the plugin's valuation of an item. Items with lots of durability are worth exponentially more than near-dead ones.
+     * 
+     * @param item
+     *            The item to consider
+     * @return double value between 0 and 1 representing its considered value
+     */
+    public double valueOfItem(ItemStack item) {
+        // first check it is a valid ordosloot item - color check
+        ItemMeta meta = item.getItemMeta();
+        String displayName = meta.getDisplayName();
+        // check properties match up
+        if (meta.hasEnchants()) {
+            // if (meta.hasEnchants() && meta.getDisplayName.endsWith(ChatColor.RESET.toString()) { // enable this once migration is
+            // complete
+            if (displayName.contains("" + Quality.UNIQUE.getColor())) {
+                ItemStack testUnique = generateUniqueDrop(getUniqueItemData(ChatColor.stripColor(displayName)));
+                // #TODO: Check this works
+                if (!testUnique.getItemMeta().equals(meta)) {
+                    return 0d;
+                }
+            }
+
+            // if the name color doesn't match the color of any quality, everything will be 0 anyway.
+            double value = 0;
+            // now that it's all verified, work out the value of the item
+            for (Quality q : Quality.values()) {
+                if (displayName.contains(q.getColor().toString())) {
+                    double rarity = Double.parseDouble(config.getString("rarities." + q.toString().toLowerCase()));
+                    // base value = 1/rarity
+                    value = 1.0d / rarity;
+                }
+            }
+
+            // weight by durability
+            double durabilityModifier = item.getDurability() / item.getType().getMaxDurability();
+            // square durability so that more durability is polynomially better
+            value = value * (durabilityModifier * durabilityModifier);
+
+            if (verbose) {
+                logger.info("Valued item '" + meta.getDisplayName() + "' with durability " + item.getDurability() + " / "
+                        + item.getType().getMaxDurability() + " at " + value);
+            }
+            return value;
+        } else {
+            return 0d;
+        }
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -824,7 +916,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
 
     }
 
-    static String[] readFile(String path, Charset encoding) throws IOException {
+    public static String[] readFile(String path, Charset encoding) throws IOException {
         byte[] encoded = Files.readAllBytes(Paths.get(path));
         // create an array of unprocessed raw strings by splitting along newline chars
         String[] fileContentArray = encoding.decode(ByteBuffer.wrap(encoded)).toString().split("\n");
@@ -836,5 +928,15 @@ public class OrdosLoot extends JavaPlugin implements Listener {
             }
         }
         return fileContentList.toArray(new String[fileContentList.size()]);
+    }
+
+    // Monitor players renaming items to make sure they don't try to create items with the same colors as OrdosLoot items.
+    // Currently disabled so that players can actually repair items
+    // @EventHandler(priority = EventPriority.MONITOR)
+    public void onInventoryClick(InventoryClickEvent event) {
+        if (event.getInventory().getType() == InventoryType.ANVIL && event.getSlotType() == SlotType.RESULT) {
+            Inventory anvil = event.getInventory();
+            ItemStack anvilResult = anvil.getItem(event.getSlot());
+        }
     }
 }

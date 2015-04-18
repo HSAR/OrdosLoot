@@ -168,7 +168,7 @@ public class UniqueListener implements Listener {
                     UniqueTableEntry ute = uniques.getByItemStack(player.getItemInHand());
                     if (ute != null) {
                         if (ute.getEffects().contains(UniqueEffect.INFINITE_DURABILITY)) {
-                            is.setDurability((short) 1000);
+                            is.setDurability(is.getType().getMaxDurability());
                         }
                     }
                 }
@@ -198,8 +198,8 @@ public class UniqueListener implements Listener {
             ItemStack itemInHand = player.getInventory().getItem(event.getNewSlot());
             List<PotionEffect> potionEffectQueue = new ArrayList<PotionEffect>();
             // ADD EFFECTS ON ITEM IN HAND
-            if ((itemInHand != null) && (itemInHand.hasItemMeta())) {
-                ItemMeta im = itemInHand.getItemMeta();
+            if ((itemInHand != null) && (itemInHand.hasItemMeta())) {        
+                ItemMeta im = itemInHand.getItemMeta();   
                 // items must have lore to be a unique
                 if (im.hasLore()) {
                     // check if the item is a unique

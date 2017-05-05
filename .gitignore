@@ -4,11 +4,10 @@
 *.war
 *.ear
 
-# Eclipse Project Files #
-.project
-.classpath
-.settings
-/bin
+# Intellij Files #
+/.idea
+/out
+*.iml
 
 
 # Local DB file #

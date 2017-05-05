@@ -1,0 +1,26 @@
+name: OrdosLoot
+main: org.landofordos.ordosloot.OrdosLoot
+version: 0.6
+commands:
+   ordosloot:
+      description: OrdosLoot base command.
+      usage: /ordosloot help
+      permission: ordosloot.*
+      permission-message: You don't have permission to use this.
+permissions:
+    ordosloot.*:
+        description: Gives access to all OrdosLoot commands
+        default: op
+        children:
+            ordosloot.reloadconfig: true 
+            ordosloot.ingametoggle: true
+            ordosloot.giveloot: true
+    ordosloot.reloadconfig:
+        description: Allows access to reloading the plugin's configuration file
+        default: op
+    ordosloot.ingametoggle:
+        description: Allows a player to toggle the plugin on and off in-game
+        default: op
+    ordosloot.giveloot:
+        description: Allows a player give themselves items.
+        default: op

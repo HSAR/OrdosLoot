@@ -14,7 +14,7 @@ public class DropTable {
 	 */
 	public DropTable() {
 		// initialise table objects
-		dropTable = new ArrayList<DropTableEntry>();
+		dropTable = new ArrayList<>();
 	}
 
 	public int size() {
@@ -68,14 +68,13 @@ public class DropTable {
 	}
 
 	public static Material[] getValidItems() {
-		Material[] result = { Material.BOW, Material.DIAMOND_SWORD, Material.IRON_SWORD, Material.GOLD_SWORD, Material.STONE_SWORD,
+		return new Material[]{ Material.BOW, Material.DIAMOND_SWORD, Material.IRON_SWORD, Material.GOLD_SWORD, Material.STONE_SWORD,
 				Material.WOOD_SWORD, Material.DIAMOND_AXE, Material.IRON_AXE, Material.GOLD_AXE, Material.STONE_AXE, Material.WOOD_AXE,
 				Material.DIAMOND_HELMET, Material.IRON_HELMET, Material.CHAINMAIL_HELMET, Material.GOLD_HELMET, Material.LEATHER_HELMET,
 				Material.DIAMOND_CHESTPLATE, Material.IRON_CHESTPLATE, Material.CHAINMAIL_CHESTPLATE, Material.GOLD_CHESTPLATE,
 				Material.LEATHER_CHESTPLATE, Material.DIAMOND_LEGGINGS, Material.IRON_LEGGINGS, Material.CHAINMAIL_LEGGINGS,
 				Material.GOLD_LEGGINGS, Material.LEATHER_LEGGINGS, Material.DIAMOND_BOOTS, Material.IRON_BOOTS, Material.CHAINMAIL_BOOTS,
 				Material.GOLD_BOOTS, Material.LEATHER_BOOTS, };
-		return result;
 	}
 
 }

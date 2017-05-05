@@ -57,7 +57,6 @@ public enum Quality {
 	}
 
 	public static Quality[] getQualities() { // hard-coded to return them in the correct order for use in table generation
-		Quality[] qualities = { UNIQUE, LEGENDARY, RARE, UNCOMMON, ORDINARY };
-		return qualities;
+		return new Quality[]{ UNIQUE, LEGENDARY, RARE, UNCOMMON, ORDINARY };
 	}
 }

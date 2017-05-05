@@ -51,9 +51,9 @@ public class UniqueListener implements Listener {
         this.plugin = plugin;
         uniques = plugin.getUniqueTable();
         //
-        knownEffects = new HashMap<String, Set<PotionEffectType>>();
+        knownEffects = new HashMap<>();
         //
-        honourBound = new HashMap<String, Boolean>();
+        honourBound = new HashMap<>();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -62,7 +62,7 @@ public class UniqueListener implements Listener {
         if (!event.isCancelled()) {
             // check for player as damage source
             Entity damagerEntity = event.getDamager();
-            List<PotionEffect> potionEffectQueue = new ArrayList<PotionEffect>();
+            List<PotionEffect> potionEffectQueue = new ArrayList<>();
             Player player = null;
             if (damagerEntity instanceof Player) {
                 player = (Player) damagerEntity;
@@ -196,7 +196,7 @@ public class UniqueListener implements Listener {
         if (!event.isCancelled()) {
             Player player = event.getPlayer();
             ItemStack itemInHand = player.getInventory().getItem(event.getNewSlot());
-            List<PotionEffect> potionEffectQueue = new ArrayList<PotionEffect>();
+            List<PotionEffect> potionEffectQueue = new ArrayList<>();
             // ADD EFFECTS ON ITEM IN HAND
             if ((itemInHand != null) && (itemInHand.hasItemMeta())) {        
                 ItemMeta im = itemInHand.getItemMeta();   
@@ -308,7 +308,7 @@ public class UniqueListener implements Listener {
                             case HONOURBOUND:
                                 Boolean value = honourBound.get(player.getName());
                                 if (value != null) {
-                                    if (value.booleanValue()) {
+                                    if (value) {
                                         event.setCancelled(true);
                                     }
                                 }
@@ -336,7 +336,7 @@ public class UniqueListener implements Listener {
                         }
                     }
                 } else {
-                    knownEffectList = new HashSet<PotionEffectType>(potionEffectQueue.size());
+                    knownEffectList = new HashSet<>(potionEffectQueue.size());
                 }
                 for (PotionEffect pEffect : potionEffectQueue) {
                     // add new ones
@@ -399,7 +399,7 @@ public class UniqueListener implements Listener {
                             case HONOURBOUND:
                                 Boolean value = honourBound.get(player.getName());
                                 if (value != null) {
-                                    if (value.booleanValue()) {
+                                    if (value) {
                                         event.setCancelled(true);
                                     }
                                 }

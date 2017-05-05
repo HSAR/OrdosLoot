@@ -15,7 +15,7 @@ public class NameTable {
 	 */
 	public NameTable() {
 		// initialise table objects
-		nameTable = new ArrayList<NameTableEntry>();
+		nameTable = new ArrayList<>();
 	}
 
 	public int size() {

@@ -33,7 +33,7 @@ public class QualityTable {
 	public QualityTable(Map<Quality, Double> dropRates) {
 		// Need to do this in the right order
 		double total = 0d;
-		dropTable = new ArrayList<QualityTableEntry>(5);
+		dropTable = new ArrayList<>(5);
 		for (Quality q : Quality.getQualities()) {
 			double rarity = dropRates.get(q);
 			total += rarity;
@@ -49,9 +49,9 @@ public class QualityTable {
 	 */
 	public Quality checkQuality(double dropValue) {
 		// lower drop value = better loot given (this avoids having to calculate the "empty" space)
-		for (int i = 0; i < dropTable.size(); i++) {
-			if (dropValue < dropTable.get(i).getPerc()) {
-				Quality droppedQuality = dropTable.get(i).getQuality();
+		for (QualityTableEntry dropTableEntry : dropTable) {
+			if (dropValue < dropTableEntry.getPerc()) {
+				Quality droppedQuality = dropTableEntry.getQuality();
 				return droppedQuality;
 			}
 		}

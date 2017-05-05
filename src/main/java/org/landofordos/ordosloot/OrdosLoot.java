@@ -136,7 +136,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
         }
         // load loot rarities from config file
         double total = 0;
-        Map<Quality, Double> qualityDropRates = new HashMap<Quality, Double>();
+        Map<Quality, Double> qualityDropRates = new HashMap<>();
         for (Quality q : Quality.values()) {
             if (verbose) {
                 // logger.info(q.toString().toLowerCase() + " [" + config.getString("rarities." + q.toString().toLowerCase()) + "]");
@@ -183,7 +183,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
             } else {
                 // valid quality list
                 String[] validQualities = splitConfigList(dropData[2]);
-                List<Quality> quals = new ArrayList<Quality>();
+                List<Quality> quals = new ArrayList<>();
                 for (String validQuality : validQualities) {
                     Quality q = Quality.getByName(validQuality);
                     if (q != null) {
@@ -228,7 +228,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
             } else {
                 // valid item list
                 String[] validItems = splitConfigList(prefixData[2]);
-                List<Material> ites = new ArrayList<Material>();
+                List<Material> ites = new ArrayList<>();
                 for (String validItem : validItems) {
                     Material m = Material.getMaterial(validItem);
                     if (m != null) {
@@ -239,7 +239,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                 }
                 // enchantment list
                 String[] enchPairs = splitConfigList(prefixData[3]);
-                List<EnchantmentData> enchs = new ArrayList<EnchantmentData>();
+                List<EnchantmentData> enchs = new ArrayList<>();
                 for (String enchPair : enchPairs) {
                     String[] enchLine = enchPair.split("=");
                     enchs.add(getEnchantment(enchLine[0], enchLine[1]));
@@ -259,7 +259,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
             } else {
                 // valid item list
                 String[] validItems = splitConfigList(coreData[2]);
-                List<Material> ites = new ArrayList<Material>();
+                List<Material> ites = new ArrayList<>();
                 for (String validItem : validItems) {
                     Material m = Material.getMaterial(validItem);
                     if (m != null) {
@@ -270,7 +270,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                 }
                 // enchantment list
                 String[] enchPairs = splitConfigList(coreData[3]);
-                List<EnchantmentData> enchs = new ArrayList<EnchantmentData>();
+                List<EnchantmentData> enchs = new ArrayList<>();
                 for (String enchPair : enchPairs) {
                     String[] enchLine = enchPair.split("=");
                     enchs.add(getEnchantment(enchLine[0], enchLine[1]));
@@ -289,7 +289,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
             } else {
                 // valid item list
                 String[] validItems = splitConfigList(suffixData[2]);
-                List<Material> ites = new ArrayList<Material>();
+                List<Material> ites = new ArrayList<>();
                 for (String validItem : validItems) {
                     Material m = Material.getMaterial(validItem);
                     if (m != null) {
@@ -300,7 +300,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                 }
                 // enchantment list
                 String[] enchPairs = splitConfigList(suffixData[3]);
-                List<EnchantmentData> enchs = new ArrayList<EnchantmentData>();
+                List<EnchantmentData> enchs = new ArrayList<>();
                 for (String enchPair : enchPairs) {
                     String[] enchLine = enchPair.split("=");
                     enchs.add(getEnchantment(enchLine[0], enchLine[1]));
@@ -336,7 +336,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
             } else {
                 // valid item list
                 String[] validItems = splitConfigList(prefixData[2]);
-                List<Material> ites = new ArrayList<Material>();
+                List<Material> ites = new ArrayList<>();
                 for (String validItem : validItems) {
                     Material m = Material.getMaterial(validItem);
                     if (m != null) {
@@ -347,7 +347,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                 }
                 // enchantment list
                 String[] enchPairs = splitConfigList(prefixData[3]);
-                List<EnchantmentData> enchs = new ArrayList<EnchantmentData>();
+                List<EnchantmentData> enchs = new ArrayList<>();
                 for (String enchPair : enchPairs) {
                     String[] enchLine = enchPair.split("=");
                     enchs.add(getEnchantment(enchLine[0], enchLine[1]));
@@ -366,7 +366,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
             } else {
                 // valid item list
                 String[] validItems = splitConfigList(coreData[2]);
-                List<Material> ites = new ArrayList<Material>();
+                List<Material> ites = new ArrayList<>();
                 for (String validItem : validItems) {
                     Material m = Material.getMaterial(validItem);
                     if (m != null) {
@@ -377,7 +377,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                 }
                 // enchantment list
                 String[] enchPairs = splitConfigList(coreData[3]);
-                List<EnchantmentData> enchs = new ArrayList<EnchantmentData>();
+                List<EnchantmentData> enchs = new ArrayList<>();
                 for (String enchPair : enchPairs) {
                     String[] enchLine = enchPair.split("=");
                     enchs.add(getEnchantment(enchLine[0], enchLine[1]));
@@ -396,7 +396,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
             } else {
                 // valid item list
                 String[] validItems = splitConfigList(suffixData[2]);
-                List<Material> ites = new ArrayList<Material>();
+                List<Material> ites = new ArrayList<>();
                 for (String validItem : validItems) {
                     Material m = Material.getMaterial(validItem);
                     if (m != null) {
@@ -407,7 +407,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                 }
                 // enchantment list
                 String[] enchPairs = splitConfigList(suffixData[3]);
-                List<EnchantmentData> enchs = new ArrayList<EnchantmentData>();
+                List<EnchantmentData> enchs = new ArrayList<>();
                 for (String enchPair : enchPairs) {
                     String[] enchLine = enchPair.split("=");
                     enchs.add(getEnchantment(enchLine[0], enchLine[1]));
@@ -434,7 +434,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                 logger.log(Level.SEVERE, "Format error in unique item " + uniqueData[0] + ".");
             } else {
                 // description
-                List<String> desc = new ArrayList<String>(Arrays.asList(splitConfigList(uniqueData[2])));
+                List<String> desc = new ArrayList<>(Arrays.asList(splitConfigList(uniqueData[2])));
                 // item type
                 Material m = Material.getMaterial(uniqueData[3]);
                 if (m == null) {
@@ -442,7 +442,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                 }
                 // effect list
                 String[] effectData = splitConfigList(uniqueData[4]);
-                List<EffectData> effs = new ArrayList<EffectData>();
+                List<EffectData> effs = new ArrayList<>();
                 // if empty, skip
                 for (String effectPair : effectData) {
                     if (!effectPair.equals("")) {
@@ -457,7 +457,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                 }
                 // enchantment list
                 String[] enchPairs = splitConfigList(uniqueData[5]);
-                List<EnchantmentData> enchs = new ArrayList<EnchantmentData>();
+                List<EnchantmentData> enchs = new ArrayList<>();
                 // if empty, skip
                 for (String enchPair : enchPairs) {
                     if (!enchPair.equals("")) {
@@ -473,7 +473,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
                 // validation check before entry
                 if ((uniqueData[0] != null) && (Integer.parseInt(uniqueData[1]) > 0) && (desc != null) && (m != null) && (effs != null)
                         && (enchs != null)) {
-                    List<Material> matList = new ArrayList<Material>(1);
+                    List<Material> matList = new ArrayList<>(1);
                     matList.add(m);
                     uniqueTable.addUnique(uniqueData[0], Integer.parseInt(uniqueData[1]), desc, matList, effs, enchs);
                 }
@@ -786,7 +786,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
         sb.append(dateStamp);
         sb.append("]: ");
         sb.append(quality.toString());
-        sb.append(" " + item.getType().toString() + " \"");
+        sb.append(" ").append(item.getType().toString()).append(" \"");
         sb.append(ChatColor.stripColor(item.getItemMeta().getDisplayName()));
         sb.append("\" dropped for ");
         sb.append(player.getName());
@@ -921,7 +921,7 @@ public class OrdosLoot extends JavaPlugin implements Listener {
         // create an array of unprocessed raw strings by splitting along newline chars
         String[] fileContentArray = encoding.decode(ByteBuffer.wrap(encoded)).toString().split("\n");
         // add to fileContentList only if a string is not a comment // like this
-        List<String> fileContentList = new ArrayList<String>();
+        List<String> fileContentList = new ArrayList<>();
         for (String s : fileContentArray) {
             if ((!s.contains("//")) && (!(s.trim().length() == 0))) {
                 fileContentList.add(s);

@@ -17,7 +17,7 @@ public class UniqueTable {
      */
     public UniqueTable() {
         // initialise table objects
-        uniqueTable = new ArrayList<UniqueTableEntry>();
+        uniqueTable = new ArrayList<>();
     }
 
     public int size() {
@@ -40,7 +40,7 @@ public class UniqueTable {
     }
 
     public List<String> getUniqueItemNames() {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
         for (UniqueTableEntry ute : uniqueTable) {
             if (!result.contains(ute.getName())) {
                 result.add(ute.getName());
@@ -92,13 +92,12 @@ public class UniqueTable {
     }
 
     public static Material[] getValidQualities() {
-        Material[] result = { Material.DIAMOND_SWORD, Material.IRON_SWORD, Material.GOLD_SWORD, Material.STONE_SWORD, Material.WOOD_SWORD,
+        return new Material[]{ Material.DIAMOND_SWORD, Material.IRON_SWORD, Material.GOLD_SWORD, Material.STONE_SWORD, Material.WOOD_SWORD,
                 Material.DIAMOND_AXE, Material.IRON_AXE, Material.GOLD_AXE, Material.STONE_AXE, Material.WOOD_AXE, Material.DIAMOND_HELMET,
                 Material.IRON_HELMET, Material.CHAINMAIL_HELMET, Material.GOLD_HELMET, Material.LEATHER_HELMET,
                 Material.DIAMOND_CHESTPLATE, Material.IRON_CHESTPLATE, Material.CHAINMAIL_CHESTPLATE, Material.GOLD_CHESTPLATE,
                 Material.LEATHER_CHESTPLATE, Material.DIAMOND_LEGGINGS, Material.IRON_LEGGINGS, Material.CHAINMAIL_LEGGINGS,
                 Material.GOLD_LEGGINGS, Material.LEATHER_LEGGINGS, Material.DIAMOND_BOOTS, Material.IRON_BOOTS, Material.CHAINMAIL_BOOTS,
                 Material.GOLD_BOOTS, Material.LEATHER_BOOTS, };
-        return result;
     }
 }

@@ -16,7 +16,7 @@ public class EnchantQueue {
 	private Map<Enchantment, Integer> enchMap;
 
 	public EnchantQueue() {
-		enchMap = new HashMap<Enchantment, Integer>();
+		enchMap = new HashMap<>();
 		// store all enchantments at 0 to the map at the start
 		for (Enchantment e : Enchantment.values()) {
 			enchMap.put(e, 0);
@@ -28,7 +28,7 @@ public class EnchantQueue {
 	}
 
 	public List<EnchantmentData> finaliseEnchantments() {
-		List<EnchantmentData> result = new ArrayList<EnchantmentData>();
+		List<EnchantmentData> result = new ArrayList<>();
 		for (Enchantment e : Enchantment.values()) {
 			int level = enchMap.get(e);
 			// if we have an enchantment to apply...
